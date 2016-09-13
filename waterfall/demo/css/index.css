@@ -1,7 +1,7 @@
 
 @charset "utf-8";
 html {height: 100%;background: #ffd65a;}
-body {margin:0; padding:0; font:12px "微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 62.5%;height: 100%;}
+body {margin:0; padding:0; font-family:"微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 16px;height: 100%;}
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
 input,textarea,select{font-family:"宋体"; color:#666}
 table,td,tr,th{font-size:.75rem;}
@@ -50,8 +50,8 @@ header span.arraw::before{
   border-top: 1.2rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: 0.34rem;
-  left: -0.25rem;
+  top: 0.56rem;
+  left:-0.27rem;
 }
 header span.arraw::after{
   content: '';
@@ -60,15 +60,14 @@ header span.arraw::after{
   border-bottom: 1.2rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: -0.72rem;
-  left: -1.2rem;
+  top: -0.79rem;
+  left: -1.35rem;
 }
 
 .main-content{
   width: 100%;
   box-sizing: border-box;
   background: url('../img/main_background.png') center top no-repeat #ffd65a;
-  /*padding-bottom: 2.875rem;*/
 }
 
 #flow-box{margin:10px auto 0 auto; padding:0; position:relative}
@@ -225,10 +224,10 @@ footer p{
   }
 
   header span.arraw::before{
-    top: 0.56rem;
+    top: 0.8rem;
   }
   header span.arraw::after{
-    top: -0.51rem;
+    top: -0.54rem;
   }
 
   .main-content{

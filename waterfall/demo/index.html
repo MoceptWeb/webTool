@@ -14,6 +14,7 @@
           <h1>{{$活动名称}}</h1>
           <span class="arraw">&nbsp;</span>
         </div>
+        <img src="img/wap_background.png" alt="" style="width:100%;height:auto">
       </header>
 
       <section class="main-content">
@@ -21,44 +22,32 @@
 <!--            <li>
               <span class="order">{{$顺序}}</span>
               <img src="{{$展品图片}}" />
-              <p class="box-title">111{{$展品名称}}}</p>
-              <p class="box-desc">{{$展品}}</p>
+              <p class="box-title">{{$展品名称}}}</p>
+              <p class="box-desc">{{$展品描述}}</p>
               <p class="box-support">支持：{{$支持数}}</p>
             </li>-->
-
+            <!--单图-->
             <li class='result-single'>
-              <span class="box-order">1</span>
-              <img src="http://dummyimage.com/640x3:1" />
-              <p class="box-support">支持：122</p>
+              <span class="box-order">{{$顺序}}</span>
+              <img src="{{$展品图片}}" />
+              <p class="box-support">支持：{{$支持数}}</p>
             </li>
-
+            <!-- 纯文字 -->
             <li class='result-text'>
-              <span class="box-order">2</span>
-              <p class="box-title">支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持</p>
-              <p class="box-desc">sss支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122</p>
-              <p class="box-support">支持：1200</p>
+              <span class="box-order">{{$顺序}}</span>
+              <p class="box-title">{{$展品名称}}}</p>
+              <p class="box-desc">{{$展品描述}}</p>
+              <p class="box-support">支持：{{$支持数}}</p>
             </li>
-
-
-          <li>
-              <span class="box-order">3</span>
-              <img src="http://dummyimage.com/640x3:2" />
-              <p class="box-title">2sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
-            </li>
-
+            <!-- 多图 -->
             <li>
-              <span class="box-order">4</span>
-              <img src="http://dummyimage.com/640x3:3" />
-              <p class="box-title">3sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
+                <span class="box-order">{{$顺序}}</span>
+                <img src="{{$展品图片}}" />
+                <p class="box-title">{{$展品名称}}}</p>
+                <p class="box-desc">{{$展品描述}}</p>
+                <p class="box-support">支持：{{$支持数}}</p>
             </li>
 
-            <li>
-              <span class="box-order">5</span>
-              <img src="http://dummyimage.com/640x3:1" />
               <p class="box-title">4sss</p>
               <p class="box-desc">sss</p>
               <p class="box-support">支持：1200</p>
@@ -123,12 +112,6 @@
     </div>
 </body>
 <script>
-/**
-if( !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) ) {
-  //图片加载完成后执行
-  window.onload = function() {flow(10, 10)};
-}
-*/
 if(getClientWidth() > 640 || !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))){
   //图片加载完成后执行
   window.onload = function() {flow(10, 10)};

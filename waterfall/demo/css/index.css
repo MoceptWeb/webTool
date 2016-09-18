@@ -1,7 +1,7 @@
 
 @charset "utf-8";
-html {height: 100%;background: #ffd65a;}
-body {margin:0; padding:0; font-family:"微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 16px;height: 100%;}
+html {height: 100%;background: #ffd65a;width:100%;}
+body {margin:0; padding:0; font:12px "微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 62.5%;height: 100%;}
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
 input,textarea,select{font-family:"宋体"; color:#666}
 table,td,tr,th{font-size:.75rem;}
@@ -16,7 +16,8 @@ a{text-decoration: none;}
 
 .wrap{
   margin: 0 auto;
-  width: 62.5rem;
+  /*width: 62.5rem;*/
+  width:1000px;
   height:100%;
   background: #ffd65a;
   position: relative;
@@ -24,22 +25,27 @@ a{text-decoration: none;}
 
 header{
   width: 100%;
-  height: 23.6rem;
+  height: 377px;
   background: url('../img/header_background.png') center top no-repeat;
   position: relative;
 }
 
+header img {
+  display: none;
+}
+
 .title{
   position: absolute;
-  top: 11.75rem;
-  left: 3.25rem;
+  top: 184px;
+  left: 53px;
 }
 
 header h1{
   display: inline-block;
-  line-height: 1.5rem;
+  line-height: 2.2rem;
   font-size: 1.5rem;
-  padding: .4rem 1rem .4rem 1rem;
+  /*padding: .4rem 1rem .4rem 1rem;*/
+  padding: 0 2rem 0 1rem;
   background: rgb(60, 101, 253);
 }
 
@@ -47,32 +53,34 @@ header span.arraw::before{
   content: '';
   width: 0;
   height: 0;
-  border-top: 1.2rem solid rgb(60, 101, 253);
+  border-top: 1.1rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: 0.56rem;
-  left:-0.27rem;
+  top: 0.34rem;
+  left: -0.25rem;
 }
 header span.arraw::after{
   content: '';
   width: 0;
   height: 0;
-  border-bottom: 1.2rem solid rgb(60, 101, 253);
+  border-bottom: 1.1rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: -0.79rem;
-  left: -1.35rem;
+  top: -0.72rem;
+  left: -1.2rem;
 }
 
 .main-content{
   width: 100%;
   box-sizing: border-box;
   background: url('../img/main_background.png') center top no-repeat #ffd65a;
+  /*padding-bottom: 2.875rem;*/
 }
 
-#flow-box{margin:10px auto 0 auto; padding:0; position:relative}
+#flow-box{margin:10px auto 0; padding:0; position:relative}
 #flow-box li{
-    width:18.8rem;
+    width:290px;
+    min-height: 120px;
     position:absolute;
     padding:.625rem;
     list-style:none;
@@ -149,19 +157,19 @@ header span.arraw::after{
   background:#5957b1;
 }
 #flow-box li:nth-child(1) .box-order, #flow-box li:nth-child(2) .box-order, #flow-box li:nth-child(3) .box-order {
-  width: 7.0625rem;
-  height: 7.3125rem;
+  width: 113px;
+  height: 117px;
   left: -0.3rem;
   font-size: 0;
 }
 #flow-box li:nth-child(1) .box-order{
-  background:url('../img/first-result.png');
+  background:url('../img/first-result.png') no-repeat;
 }
 #flow-box li:nth-child(2) .box-order{
-  background:url('../img/second-result.png');
+  background:url('../img/second-result.png') no-repeat;
 }
 #flow-box li:nth-child(3) .box-order{
-  background:url('../img/third-result.png');
+  background:url('../img/third-result.png') no-repeat;
 }
 #flow-box li:nth-child(1) .box-title, #flow-box li:nth-child(1) .box-desc, #flow-box li:nth-child(2) .box-title, #flow-box li:nth-child(2) .box-desc, #flow-box li:nth-child(3) .box-title, #flow-box li:nth-child(3) .box-desc{
   color:#ffffff;
@@ -198,22 +206,24 @@ footer p{
 }
 
 @media screen and (max-width: 640px) {
-  body{
+  /*body{
     background: url('../img/wap_background.png') no-repeat;
     background-size: contain;
-  }
+  }*/
   .wrap{
     background-color: transparent;
     width: 100%;
   }
   header{
-    height: 15.8rem;
+    height: auto;
     background-image: none;
   }
-
+  header img {
+    display: block;
+  }
   header .title{
-    top: 6.875rem;
-    left: 1.2rem;
+    top: 110px;
+    left: 18px;
   }
   header h1{
     display: inline-block;
@@ -224,10 +234,10 @@ footer p{
   }
 
   header span.arraw::before{
-    top: 0.8rem;
+    top: 0.56rem;
   }
   header span.arraw::after{
-    top: -0.54rem;
+    top: -0.51rem;
   }
 
   .main-content{
@@ -253,9 +263,9 @@ footer p{
 }
 
 @media screen and (max-width: 320px) {
-  header{
+  /*header{
     height: 10rem;
-  }
+  }*/
   header .title {
     top: 6rem;
     left: 1.2rem;

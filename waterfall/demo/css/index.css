@@ -52,20 +52,20 @@ header span.arraw::before{
   content: '';
   width: 0;
   height: 0;
-  border-top: 1.1rem solid rgb(60, 101, 253);
+  border-top: 1.2rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: 0.2rem;
-  left: -0.25rem;
+  top: 0.3rem;
+  left: -0.22rem;
 }
 header span.arraw::after{
   content: '';
   width: 0;
   height: 0;
-  border-bottom: 1.1rem solid rgb(60, 101, 253);
+  border-bottom: 1.2rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: -0.72rem;
+  top: -0.85rem;
   left: -1.2rem;
 }
 
@@ -145,7 +145,7 @@ header span.arraw::after{
 #flow-box .result-text .box-desc{
   font-size: 1rem;
   text-indent:2rem;
-  line-height: 1.625
+  line-height: 1.625rem;
 }
 #flow-box .result-single .box-support{
   margin-top: .5rem;
@@ -226,17 +226,17 @@ footer p{
   }
   header h1{
     display: inline-block;
-    line-height: 1.5rem;
-    font-size: 0.8rem;
-    padding: .4rem 1rem .4rem 1rem;
+    line-height: 2.2rem;
+    font-size: 1.5rem;
+    /*padding: .4rem 1rem .4rem 1rem;*/
     background: rgb(60, 101, 253);
   }
 
   header span.arraw::before{
-    top: 0.56rem;
+    /*top: 0.1rem;*/
   }
   header span.arraw::after{
-    top: -0.51rem;
+    top: -0.86rem;
   }
 
   .main-content{

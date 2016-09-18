@@ -21,6 +21,10 @@
   a{text-decoration: none;}
   .clear{ clear: both;*height: 0rem;*width: 0rem}
 
+  .hide{
+    display: none;
+  }
+
   .wrap{
     margin: 0 auto;
     /*width: 62.5rem;*/
@@ -312,75 +316,17 @@
             <!-- 纯文字 -->
             <li class='result-text'>
               <span class="box-order">{{$顺序}}</span>
-              <p class="box-title">{{$展品名称}}}</p>
-              <p class="box-desc">{{$展品描述}}</p>
-              <p class="box-support">支持：{{$支持数}}</p>
+              <p class="box-title {{$subject_show}}">{{$展品名称}}}</p>
+              <p class="box-desc {{$brief_show}}">{{$展品描述}}</p>
+              <p class="box-support {{$support_times_show}}">支持：{{$支持数}}</p>
             </li>
             <!-- 多图 -->
             <li>
                 <span class="box-order">{{$顺序}}</span>
                 <img src="{{$展品图片}}" />
-                <p class="box-title">{{$展品名称}}}</p>
-                <p class="box-desc">{{$展品描述}}</p>
-                <p class="box-support">支持：{{$支持数}}</p>
-            </li>
-
-           <li class="result-text">
-             <span class="box-order">4</span>
-              <p class="box-title">4sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：1200</p>
-            </li>
-
-            <li class='result-text'>
-              <span class="box-order">6</span>
-              <p class="box-title">支支持支持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支持持支持支持</p>
-              <p class="box-desc">sss支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122</p>
-              <p class="box-support">支持：1200</p>
-            </li>
-
-            <li class='result-single'>
-              <span class="box-order">7</span>
-              <img src="http://dummyimage.com/640x3:1" />
-              <p class="box-support">支持：122</p>
-            </li>
-
-            <li class='result-text'>
-              <span class="box-order">8</span>
-              <p class="box-title">支持支持支持支持</p>
-              <p class="box-desc">sss支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122</p>
-              <p class="box-support">支持：1200</p>
-            </li>
-
-            <li>
-              <span class="box-order">9</span>
-              <img src="http://dummyimage.com/640x3:3" />
-              <p class="box-title">3sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
-            </li>
-           <li>
-              <span class="box-order">10</span>
-              <img src="http://dummyimage.com/640x3:2" />
-              <p class="box-title">5sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-              <span class="box-order">11</span>
-              <img src="http://dummyimage.com/640x3:3" />
-              <p class="box-title">6sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-              <span class="box-order">12</span>
-              <img src="http://dummyimage.com/640x3:2" />
-              <p class="box-title">7sss</p>
-              <p class="box-desc">sss</p>
-              <p class="box-support">支持：122</p>
+                <p class="box-title {{$subject_show}}">{{$展品名称}}}</p>
+                <p class="box-desc {{$brief_show}}" >{{$展品描述}}</p>
+                <p class="box-support {{$support_times_show}}">支持：{{$支持数}}</p>
             </li>
         </ul>
       </section>
@@ -436,10 +382,6 @@ function flow(mh, mv) {//参数mh和mv是定义数据块之间的间距，mh是�
       document.getElementsByTagName('footer')[0].style.margin= '2rem auto 0 auto';
       document.getElementById('flow-box').style.height = (getScrollHeight() - document.getElementsByTagName('header')[0].offsetHeight -27) + 'px';
     }else{
-      // document.getElementsByTagName('footer')[0].style.position= 'absolute';
-      // document.getElementsByTagName('footer')[0].style.margin= '0 0 0 -15rem';
-      // document.getElementsByTagName('footer')[0].style.bottom= '0';
-      // document.getElementsByTagName('footer')[0].style.left= '50%';
     }
 }
 

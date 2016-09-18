@@ -16,7 +16,7 @@ a{text-decoration: none;}
 .wrap{
   margin: 0 auto;
   /*width: 62.5rem;*/
-  width:1000px;
+  width:1049px;
   height:100%;
   background: #ffd65a;
   position: relative;
@@ -27,10 +27,6 @@ header{
   height: 377px;
   background: url('../img/header_background.png') center top no-repeat;
   position: relative;
-}
-
-header img {
-  display: none;
 }
 
 .title{
@@ -73,7 +69,7 @@ header span.arraw{
 
 #flow-box{margin:10px auto 0; padding:0; position:relative}
 #flow-box li{
-    width:290px;
+    width:305px;
     min-height: 120px;
     position:absolute;
     padding:.625rem;
@@ -211,9 +207,6 @@ footer p{
   header{
     height: 20rem;
     background-image: none;
-  }
-  header img {
-    display: block;
   }
   header .title{
     top: 10rem;

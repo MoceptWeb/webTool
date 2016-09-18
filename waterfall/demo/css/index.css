@@ -1,7 +1,6 @@
-
 @charset "utf-8";
 html {height: 100%;background: #ffd65a;width:100%;}
-body {margin:0; padding:0; font:12px "微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 62.5%;height: 100%;}
+body {margin:0; padding:0; font-family: "微软雅黑",san-serif; color: #fff;background: url('../img/background.png') center top no-repeat;font-size: 10px;height: 100%;}
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
 input,textarea,select{font-family:"宋体"; color:#666}
 table,td,tr,th{font-size:.75rem;}
@@ -56,7 +55,7 @@ header span.arraw::before{
   border-top: 1.1rem solid rgb(60, 101, 253);
   border-right: .8rem solid transparent;
   position: relative;
-  top: 0.34rem;
+  top: 0.2rem;
   left: -0.25rem;
 }
 header span.arraw::after{
@@ -106,7 +105,7 @@ header span.arraw::after{
   line-height: 2rem;
   top: 0rem;
   left: 0.4rem;
-  background: url('../img/order-result.png')
+  background: url('../img/order-result.png') 0 0/100% auto no-repeat;
 }
 #flow-box .box-title{
   padding-top: .5rem;
@@ -131,7 +130,7 @@ header span.arraw::after{
   height: 1rem;
   margin: 0 .3rem -.2rem 0;
   display: inline-block;
-  background: url('../img/support.png') no-repeat;
+  background: url('../img/support.png') 0 0/ 100% auto no-repeat;
 }
 #flow-box .result-text .box-title{
   margin: 0 auto;
@@ -163,13 +162,13 @@ header span.arraw::after{
   font-size: 0;
 }
 #flow-box li:nth-child(1) .box-order{
-  background:url('../img/first-result.png') no-repeat;
+  background:url('../img/first-result.png') 0 0/ 100% auto no-repeat;
 }
 #flow-box li:nth-child(2) .box-order{
-  background:url('../img/second-result.png') no-repeat;
+  background:url('../img/second-result.png') 0 0/ 100% auto no-repeat;
 }
 #flow-box li:nth-child(3) .box-order{
-  background:url('../img/third-result.png') no-repeat;
+  background:url('../img/third-result.png') 0 0/ 100% auto no-repeat;
 }
 #flow-box li:nth-child(1) .box-title, #flow-box li:nth-child(1) .box-desc, #flow-box li:nth-child(2) .box-title, #flow-box li:nth-child(2) .box-desc, #flow-box li:nth-child(3) .box-title, #flow-box li:nth-child(3) .box-desc{
   color:#ffffff;

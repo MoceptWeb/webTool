@@ -219,11 +219,11 @@
       width: 100%;
     }
     header{
-      height: 20rem;
+      height: 316px;
       background-image: none;
     }
     header .title{
-      top: 10rem;
+      top: 53%;
       left: 1.8rem;
       max-width: 44%;
     }
@@ -240,7 +240,7 @@
       width: 100%;
       box-sizing: border-box;
       padding:.5rem 1rem .5rem 1rem;
-      background-image: none;
+      background: none transparent;
     }
     #flow-box{
       width: 100%;
@@ -260,29 +260,31 @@
   }
   @media screen and (max-width: 480px) {
     header{
-      height: 13rem;
+      height: 263px;
     }
     header .title{
-      top: 7rem;
       left: 1.2rem;
     }
   }
 
+  @media screen and (max-width: 450px) {
+      header{
+          height: 232px;
+      }
+  }
+
   @media screen and (max-width: 384px) {
     header{
-      height: 11.5rem;
+      height: 195px;
     }
-    header .title{
-      top: 6rem;
-    }
+
   }
 
   @media screen and (max-width: 320px) {
     header{
-      height: 10rem;
+      height: 170px
     }
     header .title {
-      top: 5.4rem;
       left: 1rem;
     }
     #flow-box li.result-text:nth-child(1) .box-title, #flow-box li.result-text:nth-child(2) .box-title, #flow-box li.result-text:nth-child(3) .box-title {

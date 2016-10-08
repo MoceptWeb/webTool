@@ -119,15 +119,30 @@
     line-height: 1.25rem;
   }
   #flow-box .box-desc{
-    padding: 0 0 .5rem 0;
+    padding: 0 0 .625rem 0;
     font-size: .75rem;
     line-height: 1.25rem;
     color: #999999;
   }
+  #flow-box .box-candidate{
+    padding: 0 0 0.75rem 0;
+  }
+  #flow-box .box-candidate img {
+      margin-bottom: 0;
+      width: 1.375rem;
+      height: 1.375rem;
+      border-radius: 3px;
+  }
+  #flow-box .box-candidate span{
+      padding: 0 0 0 .625rem;
+      font-size: .875rem;
+      line-height: 1.25rem;
+      color: #cccccc;
+  }
   #flow-box .box-support{
     color:#ffcc66;
     font-size: 0.875rem;
-    padding:.5rem 0 1rem 0;
+    padding:0 0 1rem 0;
   }
   #flow-box .box-support::before{
     content: '';
@@ -176,6 +191,9 @@
   }
   #flow-box li:nth-child(1) .box-title, #flow-box li:nth-child(1) .box-desc, #flow-box li:nth-child(2) .box-title, #flow-box li:nth-child(2) .box-desc, #flow-box li:nth-child(3) .box-title, #flow-box li:nth-child(3) .box-desc{
     color:#b9b8db;
+  }
+  #flow-box li:nth-child(1) .box-candidate span, #flow-box li:nth-child(2) .box-candidate span, #flow-box li:nth-child(2) .box-candidate,#flow-box li:nth-child(3) .box-candidate span{
+      color:#9c9ad6;
   }
   #flow-box li:nth-child(1) .box-support, #flow-box li:nth-child(2) .box-support, #flow-box li:nth-child(3) .box-support{
     color: #ffcc66;
@@ -321,6 +339,10 @@
               <span class="box-order">{{$顺序}}</span>
               <p class="box-title {{$subject_show}}">{{$展品名称}}}</p>
               <p class="box-desc {{$brief_show}}">{{$展品描述}}</p>
+              <p class="box-candidate {{$candidate_show}}">
+                  <img src="{{$candidate_avatar}}" alt="">
+                  <span>{{$candidate}}</span>
+              </p>
               <p class="box-support {{$support_times_show}}">支持：{{$支持数}}</p>
             </li>
             <!-- 多图 -->
@@ -329,6 +351,10 @@
                 <img src="{{$展品图片}}" />
                 <p class="box-title {{$subject_show}}">{{$展品名称}}}</p>
                 <p class="box-desc {{$brief_show}}" >{{$展品描述}}</p>
+                <p class="box-candidate {{$candidate_show}}">
+                    <img src="{{$candidate_avatar}}" alt="">
+                    <span>{{$candidate}}</span>
+                </p>
                 <p class="box-support {{$support_times_show}}">支持：{{$支持数}}</p>
             </li>
             <li>
@@ -336,73 +362,10 @@
                 <img src="http://dummyimage.com/640x3:2" />
                 <p class="box-title">2sss</p>
                 <p class="box-desc">sss</p>
-                <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-                <span class="box-order">4</span>
-                <img src="http://dummyimage.com/640x3:3" />
-                <p class="box-title">3sss持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支</p>
-                <p class="box-desc">sss</p>
-                <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-                <span class="box-order">5</span>
-                <img src="http://dummyimage.com/640x3:1" />
-                <p class="box-title">4sss</p>
-                <p class="box-desc">ss持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支s</p>
-                <p class="box-support">支持：1200</p>
-            </li>
-
-            <li class='result-text'>
-                <span class="box-order">6</span>
-                <p class="box-title">支支持支持持支持支持持支持支持支支持支持持支持支持持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支支持支持持支持支持持支持支持支持支持支支持支持持支持支持持支持支持</p>
-                <p class="box-desc">sss支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122</p>
-                <p class="box-support">支持：1200</p>
-            </li>
-
-            <li class='result-single'>
-                <span class="box-order">7</span>
-                <img src="http://dummyimage.com/640x3:1" />
-                <p class="box-support">支持：122</p>
-            </li>
-
-            <li class='result-text'>
-                <span class="box-order">8</span>
-                <p class="box-title">支持支持支持支持</p>
-                <p class="box-desc">sss支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122支持：122</p>
-                <p class="box-support">支持：1200</p>
-            </li>
-
-            <li>
-                <span class="box-order">9</span>
-                <img src="http://dummyimage.com/640x3:3" />
-                <p class="box-title">3sss</p>
-                <p class="box-desc">sss</p>
-                <p class="box-support">支持：122</p>
-            </li>
-            <li>
-                <span class="box-order">10</span>
-                <img src="http://dummyimage.com/640x3:2" />
-                <p class="box-title">5sss</p>
-                <p class="box-desc">sss</p>
-                <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-                <span class="box-order">11</span>
-                <img src="http://dummyimage.com/640x3:3" />
-                <p class="box-title">6sss</p>
-                <p class="box-desc">sss</p>
-                <p class="box-support">支持：122</p>
-            </li>
-
-            <li>
-                <span class="box-order">12</span>
-                <img src="http://dummyimage.com/640x3:2" />
-                <p class="box-title">7sss</p>
-                <p class="box-desc">sss</p>
+                <p class="box-candidate {{$candidate_show}}">
+                    <img src="{{$candidate_avatar}}" alt="">
+                    <span>{{$candidate}}</span>
+                </p>
                 <p class="box-support">支持：122</p>
             </li>
         </ul>

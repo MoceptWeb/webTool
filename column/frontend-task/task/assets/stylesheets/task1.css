@@ -1,0 +1,50 @@
+@font-face {
+  font-family: Roboto;
+  src: url('../font/Roboto-Black.ttf');
+}
+[role=button] {
+    background-color: rgb(200,20,100);
+}
+
+@media screen and (min-width:415px) {
+  /*.content{
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -moz-box;
+    align-items: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+  }
+  .content p{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 50%;
+  }*/
+  /*.content {
+  -moz-column-count: 2;
+  -webkit-column-count: 2;
+  column-count: 2;
+  }
+  .content p {
+  display: inline-block;
+  }
+  */
+ .content {
+   font-size: 0;
+ }
+ .content p {
+   font-size: 14px;
+   box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   display: inline-block;
+   width: 50%;
+   vertical-align: top;
+ }
+}

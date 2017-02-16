@@ -1,0 +1,83 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.main {
+  width: 1000px;
+  margin: 0 auto;
+  background-color: #9FA1A2;
+}
+.main > section > div{
+  height: 300px;
+  color: #E74E3E;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.a-part{
+  width: 180px;
+  background: #53886D;
+}
+.b-part{
+  width: 600px;
+  background: #53555D;
+}
+.c-part{
+  width: 180px;
+  background: #319BD7;
+}
+.change1{
+  margin: 0 0 5px 0;
+}
+.change1 > div{
+  float: left;
+}
+
+.change2, .change3, .change4{
+  margin: 5px 0;
+}
+.change2 .a-part, .change2 .c-part{
+  width: 180px;
+}
+.change2 .b-part{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1
+}
+.change2 {
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -moz-box;
+  -webkit-box-align: content;
+  -webkit-align-items: content;
+  align-items: content;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.change3 {
+  font-size: 0;
+}
+.change3 > .b-part{
+  font-size: 14px;
+  float: left;
+}
+.change3 > .a-part, .change3 > .c-part{
+  font-size: 14px;
+  display: inline-block;
+}
+.change1::after, .change3::after{
+  clear: both;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "testPostCSS",
+  "version": "0.0.1",
+  "description": "test PostCSS gulp plugin",
+  "keywords": [
+    "gulpplugin",
+    "PostCSS",
+    "css"
+  ],
+  "author": "damo",
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^5.0.0",
+    "gulp": "~3.8.10"
+  },
+  "devDependencies": {
+    "gulp-postcss": "^6.3.0",
+    "precss": "^1.4.0"
+  }
+}

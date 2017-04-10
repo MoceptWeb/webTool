@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="http://mockjs.com/dist/mock.js"></script>
+
+
+  <script>
+    $.ajax({
+      url: 'http://localhost:4010/posts',
+      dataType: 'json',
+      type: 'patch',
+      data: {
+        "id": 2,
+        "title": "json-server2",
+        "author": "typicode2"
+      }
+    }).done(function (data, status, jqXHR) {
+      //获得mock数据模板中的数据，打印到body上
+      $('<pre>').text(JSON.stringify(data, null, 4)).appendTo('body');
+    })
+
+    $.ajax({
+      url: 'http://localhost:4010/posts/2',
+      dataType: 'json',
+      type: 'patch',
+      data: {
+        "id": 2,
+        "title": "json-server2---2",
+        "author": "typicode2---22"
+      }
+    }).done(function (data, status, jqXHR) {
+      //获得mock数据模板中的数据，打印到body上
+      $('<pre>').text(JSON.stringify(data, null, 4)).appendTo('body');
+    })
+
+  </script>
+
+</body>
+
+</html>

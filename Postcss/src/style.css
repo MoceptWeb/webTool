@@ -1,4 +1,7 @@
-.flex{
+.flex_row{
   display: flex;
   justify-content: center;
+}
+.flex_cell{
+  flex: 1;
 }

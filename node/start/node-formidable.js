@@ -1,6 +1,6 @@
 var formidable = require('formidable'),
-    http = require('http'),
-    util = require('util');
+  http = require('http'),
+  util = require('util');
 
 http.createServer(function(req, res) {
   if (req.url == '/upload' && req.method.toLowerCase() == 'post') {

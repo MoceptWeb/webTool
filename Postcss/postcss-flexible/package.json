@@ -1,0 +1,27 @@
+{
+  "name": "testPostCSS",
+  "version": "0.0.1",
+  "description": "test PostCSS gulp plugin",
+  "keywords": [
+    "gulpplugin",
+    "PostCSS",
+    "css"
+  ],
+  "author": "damo",
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^5.0.0",
+    "gulp": "~3.8.10"
+  },
+  "devDependencies": {
+    "gulp-clean": "^0.3.2",
+    "gulp-postcss": "^6.4.0",
+    "postcss-cssnext": "^2.8.0",
+    "postcss-custom-properties": "^5.0.2",
+    "postcss-flexible": "^0.2.1",
+    "postcss-import": "^9.0.0",
+    "postcss-loader": "^1.2.0",
+    "postcss-url": "^5.1.2",
+    "precss": "^1.4.0"
+  }
+}

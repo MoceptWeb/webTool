@@ -1,0 +1,42 @@
+.flex_row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex_cell {
+  flex: 1;
+}
+
+.precss {
+  @if 3 < 5 {
+    background: green;
+  }
+  @else {
+    background: blue;
+  }
+}
+
+.c-row {
+  font-size: 32px;
+  position: relative;
+  overflow: hidden; /* preventing horizontal scrollbar */
+
+  &:active {
+    background-color: color(red alpha(0.4));
+  }
+
+  &-flex {
+    display: flex;
+    flex-direction: row;
+
+    &:active {
+      background-color: transparent;
+    }
+
+    & ~ .c-row-flex {
+      &::before {
+        content: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,291 @@
+
+.v-home {
+  height: 50%;
+  width: 100%;
+  padding: 0 dpr(10px);
+  padding-top: dpr(16px);
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: rgba(204, 204, 204, 0.5);
+  position: relative;
+
+  & .scroll-wrapper {
+    transition: filter 0.3s ease;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: dpr(88px);
+    background-color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    padding: 0 dpr(10px);
+    box-sizing: border-box;
+    margin-top: dpr(24px);
+    margin-bottom: dpr(16px);
+    border-radius: dpr(8px);
+
+    & .avatar {
+      position: relative;
+      top: -dpr(18px);
+      left: 0;
+    }
+
+    & .user-content {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: dpr(10px);
+
+      & .user-info {
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+
+        & .user-name {
+          color: #333;
+        }
+
+        & .user-prompt {
+          font-size: dpr(24px);
+          color: #ccc;
+        }
+      }
+    }
+  }
+
+  &-content {
+    width: 100%;
+    padding-bottom: dpr(40px);
+
+    & .project-cards {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+
+      & .project-card {
+        width: 33.3%;
+        padding: dpr(5px);
+        box-sizing: border-box;
+        height: dpr(380px);
+
+        & .card-content {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          border-radius: dpr(8px);
+          background-color: #fff;
+
+          & .card-header {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+
+          & .card-body {
+            width: 100%;
+          }
+
+          & .card-footer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+
+          & .record-units {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            & .unit-data {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              flex: 1;
+              width: 100%;
+
+              &.two-units {
+                width: 50%;
+
+                & .unit-number {
+                  font-size: dpr(36px);
+                }
+              }
+
+              & .unit-number {
+                flex: 1;
+                max-width: 100%;
+                font-size: dpr(48px);
+              }
+
+              & .unit-label {
+                width: 100%;
+                font-size: dpr(28px);
+              }
+            }
+          }
+
+          & .category-name {
+            color: #999;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            & span {
+              width: 100%;
+              text-align: center;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+
+          & .button-add {
+            width: 85%;
+            height: dpr(56px);
+            line-height: dpr(56px);
+            color: #fff;
+            font-size: dpr(28px);
+            margin-bottom: dpr(10px);
+          }
+        }
+
+        &:nth-child(4n+1) {
+          & .card-content {
+            color: #38adff;
+
+            & .button-add {
+              background-color: #38adff;
+              border-color: color(#38adff lightness(+10%));
+            }
+          }
+        }
+
+        &:nth-child(4n+2) {
+          & .card-content {
+            color: #13ce66;
+
+            & .button-add {
+              background-color: #13ce66;
+              border-color: color(#13ce66 lightness(+10%));
+            }
+          }
+        }
+
+        &:nth-child(4n+3) {
+          & .card-content {
+            color: #ff4949;
+
+            & .button-add {
+              background-color: #ff4949;
+              border-color: color(#ff4949 lightness(+10%));
+            }
+          }
+        }
+
+        &:nth-child(4n) {
+          & .card-content {
+            color: #f7ba2a;
+
+            & .button-add {
+              background-color: #f7ba2a;
+              border-color: color(#f7ba2a lightness(+10%));
+            }
+          }
+        }
+
+        &.add-card {
+          & .card-content {
+            justify-content: center;
+            background-color: #fff;
+            color: #38adff;
+            border: 1px solid #38adff;
+
+            &:active {
+              border-color: color(#38adff lightness(+10%));
+              background-color: color(#38adff lightness(+30%));
+              color: color(#38adff lightness(+10%));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & .relation-users {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(204, 204, 204, 0.5);
+    z-index: 2;
+    padding: 0 dpr(10px);
+    box-sizing: border-box;
+
+    & .relation-content {
+      padding-top: dpr(128px);
+      padding-bottom: dpr(16px);
+      box-sizing: border-box;
+
+      & .user-item {
+        height: dpr(120px);
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 0 dpr(20px);
+        border: 1px solid #ccc;
+        color: #333;
+        border-radius: dpr(8px);
+        margin-bottom: dpr(10px);
+        display: flex;
+        align-items: center;
+
+        & .nick-name {
+          flex: 1;
+          padding-left: dpr(20px);
+        }
+      }
+    }
+
+    & .scroll-footer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & .fetch-more {
+        width: 100%;
+        padding: dpr(20px) 0;
+        margin-bottom: dpr(20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #38adff;
+        border-radius: dpr(8px);
+
+        & .snake {
+          border-color: #38adff transparent #38adff #38adff;
+        }
+      }
+
+      & .no-more {
+        color: #666;
+        margin-bottom: dpr(20px);
+      }
+    }
+  }
+}

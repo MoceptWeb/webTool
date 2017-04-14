@@ -16,6 +16,7 @@
   "devDependencies": {
     "gulp-clean": "^0.3.2",
     "gulp-postcss": "^6.4.0",
+    "gulp-watch": "^4.3.11",
     "postcss-cssnext": "^2.8.0",
     "postcss-custom-properties": "^5.0.2",
     "postcss-flexible": "^0.2.1",

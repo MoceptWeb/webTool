@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
 var clean = require('gulp-clean'); //清理文件夹
+var watch = require('gulp-watch');
 
 var cssnext = require('postcss-cssnext');
 var precss = require('precss');
@@ -23,7 +24,10 @@ gulp.task('css', function () {
         // precss
     ];
 
-    return gulp.src('./src/**/*.css').pipe(postcss(processors)).pipe(gulp.dest('./dist'));
+    return gulp.src('./src/**/*.css')
+    .pipe(watch('./src/**/*.css'))
+    .pipe(postcss(processors))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('testcss', function () {
@@ -43,6 +47,20 @@ gulp.task('js', function () {
 gulp.task('html', function () {
     return gulp.src('./src/**/*.html').pipe(gulp.dest('./dist'));
 });
+
+// gulp.task('stream', function () {
+//     // Endless stream mode 
+//     return watch('css/**/*.css', { ignoreInitial: false })
+//         .pipe(gulp.dest('build'));
+// });
+ 
+// gulp.task('callback', function () {
+//     // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event 
+//     return watch('css/**/*.css', function () {
+//         gulp.src('css/**/*.css')
+//             .pipe(gulp.dest('build'));
+//     });
+// });
 
 gulp.task('clean', function () {
     return gulp.src('./dist')

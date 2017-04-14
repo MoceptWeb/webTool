@@ -6,6 +6,18 @@ var cssnext = require('postcss-cssnext');
 var precss = require('precss');
 var flexible = require('postcss-flexible');
 
+// var customProperties = require('postcss-custom-properties');
+
+/*var variables = {
+    text: '#333',
+    disabled: '#CCC',
+    primary: '#38ADFF',
+    secondary: '#F43531',
+    warning: '#FF6F6F',
+    placeholder: '#CCC'
+};
+var plugin = customProperties()
+plugin.setVariables(variables)*/
 gulp.task('css', function () {
     var processors = [
         // autoprefixer({ browsers: ['last 1 version'] }),
@@ -27,7 +39,7 @@ gulp.task('css', function () {
         flexible({
             remUnit: 75
         }),
-        precss
+        // precss
     ];
 
     return gulp.src('./src/**/*.css').pipe(postcss(processors)).pipe(gulp.dest('./dist'));
@@ -57,7 +69,6 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', [
-    'clean',
     'css',
     'js',
     'html'

@@ -6,18 +6,6 @@ var cssnext = require('postcss-cssnext');
 var precss = require('precss');
 var flexible = require('postcss-flexible');
 
-// var customProperties = require('postcss-custom-properties');
-
-/*var variables = {
-    text: '#333',
-    disabled: '#CCC',
-    primary: '#38ADFF',
-    secondary: '#F43531',
-    warning: '#FF6F6F',
-    placeholder: '#CCC'
-};
-var plugin = customProperties()
-plugin.setVariables(variables)*/
 gulp.task('css', function () {
     var processors = [
         // autoprefixer({ browsers: ['last 1 version'] }),
@@ -25,14 +13,7 @@ gulp.task('css', function () {
             browsers: 'Android >= 4, iOS >= 7',
             features: {
                 customProperties: {
-                    variables: {
-                        text: '#333',
-                        disabled: '#CCC',
-                        primary: '#38ADFF',
-                        secondary: '#F43531',
-                        warning: '#FF6F6F',
-                        placeholder: '#CCC'
-                    }
+                    variables: require('./src/css/variables')
                 }
             }
         }),

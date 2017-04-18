@@ -40,6 +40,10 @@ gulp.task('testcss', function () {
     return gulp.src('./src/**/test.css').pipe(postcss(processors)).pipe(gulp.dest('./dist'));
 });
 
+gulp.task('font', function () {
+    return gulp.src('./src/css/fonts/**.**').pipe(gulp.dest('./dist/css/fonts'));
+});
+
 gulp.task('js', function () {
     return gulp.src('./src/**/*.js').pipe(gulp.dest('./dist'));
 });
@@ -68,6 +72,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', [
+    'font',
     'css',
     'js',
     'html'

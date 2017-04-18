@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "postcss": "^5.0.0",
-    "gulp": "~3.8.10"
+    "gulp": "~3.9.1"
   },
   "devDependencies": {
     "gulp-clean": "^0.3.2",

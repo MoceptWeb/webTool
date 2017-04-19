@@ -15,9 +15,9 @@
 
   <script>
     $.ajax({
-      url: 'http://localhost:4010/posts',
+      url: 'http://localhost:4010/topics',
       dataType: 'json',
-      type: 'patch',
+      type: 'post',
       data: {
         "id": 2,
         "title": "json-server2",
@@ -29,12 +29,12 @@
     })
 
     $.ajax({
-      url: 'http://localhost:4010/posts/2',
+      url: 'http://localhost:4010/topics/2',
       dataType: 'json',
       type: 'patch',
       data: {
         "id": 2,
-        "title": "json-server2---2",
+        "title": "json-server2---2333",
         "author": "typicode2---22"
       }
     }).done(function (data, status, jqXHR) {

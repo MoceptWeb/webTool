@@ -14,7 +14,6 @@
 
 
   <script>
-    debugger
     Mock.mock('http://www.baidu.com', 'get', { //匹配.json文件，可执行匹配成功的参数
       'list|1-10': [{ //数据模板
         'id|+1': 1,
@@ -29,6 +28,7 @@
         dataType: 'json',
         type: 'get'
       }).done(function (data, status, jqXHR) {
+    debugger
         //获得mock数据模板中的数据，打印到body上
         $('<pre>').text(JSON.stringify(data, null, 4)).appendTo('body');
       })

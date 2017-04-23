@@ -2,7 +2,7 @@
 
 var Koa = require('koa')
 var sha1 = require('sha1')
-var config = require('./config')
+var config = require('./config/config')
 
 var app = new Koa()
 

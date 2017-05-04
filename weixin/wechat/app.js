@@ -7,7 +7,6 @@ var config = require('./config/config')
 var app = new Koa()
 
 app.use(function *(next) {
-  debugger
   console.log(this.query);
 
   var token = config.wechat.token

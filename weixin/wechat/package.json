@@ -1,15 +1,16 @@
 {
-  "name": "json-server-test",
+  "name": "wechatmo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node --harmony app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "json-server": "^0.9.6",
-    "mockjs": "^1.0.1-beta3"
+  "dependencies": {
+    "koa": "^2.2.0",
+    "sha1": "^1.1.1"
   }
 }

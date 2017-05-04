@@ -1,5 +1,5 @@
 {
-  "posts": [
+  "topics": [
     {
       "id": 1,
       "title": "json-server",
@@ -7,7 +7,7 @@
     },
     {
       "id": "2",
-      "title": "json-server2---2",
+      "title": "json-server2---2333",
       "author": "typicode2---22"
     }
   ],

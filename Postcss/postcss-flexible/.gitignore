@@ -1,3 +1,5 @@
 /node_modules
 /dest
 /dist
+/.idea
+/.vscode

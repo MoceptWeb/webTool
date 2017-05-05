@@ -1,6 +1,60 @@
 'use strict'
 
 var sha1 = require('sha1')
+var perefix = ''
+var api = {
+  access_token
+}
+function Wechat(opts) {
+  var that = this
+  this.appID = opts.appID
+  this.appSecret = opts.appSecret
+  this.getAccessToken = opts.getAccessToken
+  this.saveAccessToken = opts.saveAccessToken
+
+  this.getAccessToken().then(function(data) {
+    try {
+      data = JSON.parse(data)
+    }
+    catch(e) {
+      return that.updateAccessToken()
+    }
+
+    if(that.isValidAccessToken(data)) {
+      Promise.resolve(data)
+    } else {
+      return that.updateAccessToken()
+    }
+  })
+  .then(function(data) {
+    that.accessToken = data.access_token
+    that.expires_in = data.expires_in
+
+    that.saveAccessToken()
+  })
+}
+
+Wechat.prototype.isValidAccessToken = function(data) {
+  if(!data || !data.access_token || data.expires_id) {
+    return false
+  }
+
+  var access_token = data.access_token, 
+    expires_in = data.expires_id,
+    now = new Date().getTime()
+
+  if(now < expires_in) {
+    return true
+  } else {
+    return false
+  }
+}
+
+Wechat.prototype.updateAccessToken = function() {
+  var appID = this.appID,
+    appSecret = this.appSecret,
+    url = 
+}
 
 module.exports = function(opts) {
   return function*(next) {

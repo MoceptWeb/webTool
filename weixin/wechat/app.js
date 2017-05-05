@@ -1,7 +1,6 @@
 'use strict'
 
 var Koa = require('koa')
-var sha1 = require('sha1')
 var wechat = require('./wechat/g')
 var config = require('./config/config')
 

@@ -27,10 +27,13 @@ https://dmodaii.github.io/2017/04/19/flux/
 ## 移动端弹性布局 
 * dpr-flexible {:&.rollIn}
 http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html
+
+https://github.com/amfe/lib-flexible
 * rem
 rem（js计算）
 http://isux.tencent.com/web-app-rem.html
-* flex
+* flexbox
+1、不知道个数还要自适应
 http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool
 http://www.css88.com/book/css/properties/flex/flex.htm
 * meida query

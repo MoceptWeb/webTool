@@ -1,0 +1,21 @@
+{
+  "name": "weixin-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "express": "~4.13.1",
+    "jade": "*",
+    "koa": "^2.2.0",
+    "sha1": "^1.1.1",
+    "weixin-api": ">=0.1.6",
+    "xml2js": "0.2.6"
+  },
+  "author": "",
+  "license": "ISC"
+}

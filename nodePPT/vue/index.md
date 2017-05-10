@@ -35,6 +35,7 @@ https://dmodaii.github.io/2017/04/19/flux/
 ## 参考资料
 - https://vuex.vuejs.org/zh-cn/
 
+
 [slide]
 # vuex 状态管理 {:&.flexbox.vleft}
 

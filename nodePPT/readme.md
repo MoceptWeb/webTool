@@ -1,4 +1,4 @@
-#pdf版
+# pdf版
 
 需要安装 phantomJS 。
 
@@ -9,7 +9,7 @@ nodeppt start
 ## 导出文件
 nodeppt pdf http://127.0.0.1:8080/md/demo.md -o a.pdf
 
-#html版
+# html版
 
 ## 使用generate命令
 nodeppt generate filepath

@@ -21,3 +21,10 @@ nodeppt generate ./ppts/demo.md -a -o output/path
 导出目录下所有ppt，并且生成ppt list首页：
 
 nodeppt path -o output/path -a
+
+# 快捷键
+空格/→/↓/Tab/pageDown：下一页
+←/↑/pageUp：上一页
+P：开画板
+C：清除画板
+O: 轮播形式打开ppt

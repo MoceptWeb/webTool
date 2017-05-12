@@ -67,15 +67,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      & .project-card:nth-child(3n+1) {
-          padding-left: dpr(0px);
-      }
-      & .project-card:nth-child(3n) {
-        padding-right: dpr(0px);
-      }
       & .project-card {
-        width: 33.3%;
-        padding: dpr(5px);
+        width: 32.3%;
+        padding: dpr(5px) 0;
         box-sizing: border-box;
         height: dpr(380px);
 

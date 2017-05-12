@@ -43,7 +43,7 @@
     box-shadow: 0 0 dpr(4px) rgba(0, 0, 0, 0.1);
   }
 
-  & .avatarShow {
-    background: url(../image/avatar@2x.jpg) 0 0/ auto 100% no-repeat;
+  &.avatarShow {
+    background: url(../image/avatar@2x.jpg) 0 0/ 100% 100% no-repeat;
   }
 }

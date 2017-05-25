@@ -44,6 +44,6 @@
   }
 
   &.avatarShow {
-    background: url(../image/avatar@2x.jpg) 0 0/ 100% 100% no-repeat;
+    background: url('http://static.daydao.com/group1/M00/00/0C/wKgBoFh0blGALlJXAADVST8g5CM129.png') 0 0/ 100% 100% no-repeat;
   }
 }

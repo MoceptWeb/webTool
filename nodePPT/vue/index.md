@@ -48,7 +48,7 @@ https://dmodaii.github.io/2017/04/19/flux/
 
 [slide]
 ----
-* 多语言 {:&.fadeIn}
+* 多语言 
     * i18n {:&.动效类型}
 * [第三方库的使用、代码分割、懒加载](index.md#5)
 * 组件设计

@@ -29,31 +29,22 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 
 [slide]
 # vuex 状态管理 {:&.flexbox.vleft}
-不可变数据、规范化、持久化 
-严格遵守单向数据流；
-避免使用双向绑定；
-避免使用 v-model。
-
-
-双向绑定会使状态的改变变得不清晰，
-同时，在 mutation handler 外改变 state，
+# 不可变数据、规范化、持久化 
+* 严格遵守单向数据流；
+* 避免使用双向绑定, 避免使用 v-model。
+    * 双向绑定会使状态的改变变得不清晰，
+* 在 mutation handler 外改变 state，
 Vuex 会发出警告。
 
 当然，在不使用 Vuex 等状态管理工具的情况下，
 没有以上限制。
-https://github.com/facebook/immutable-js
+
 
 https://dmodaii.github.io/2017/04/19/flux/
 
 ## 参考资料
+- https://github.com/facebook/immutable-js
 - https://vuex.vuejs.org/zh-cn/
-
-
-[slide]
-# vuex 状态管理 {:&.flexbox.vleft}
-
-[slide]
-# vue全家桶
 
 [slide]
 ----
@@ -95,30 +86,33 @@ https://dmodaii.github.io/2017/04/19/flux/
 ```
 
 [slide]
--组件设计
-非侵入式、碎片化
+#非侵入式、碎片化
+   - 智能组件smart stateful fat screens
 
+   - 木偶dumb skinny components pure
 
 -碎片化 Single Responsibility Principle（单一职责原则）
 
 
-编写尽量小的碎片化的组件，
+>编写尽量小的碎片化的组件，
 通过灵活地组装来应对多变的需求。
 
 
-根据实际需求，
+>根据实际需求，
 在碎片化的基础上封装一些偏重的组件
 
-- props
+
+# props
+
+```
 prop 是单向绑定的
 不应该在子组件内部改变 prop
-
 
 Function 类型的 prop 会使得状态不清晰
 应尽量避免 Function 类型的 prop
 用于回调方法时，应使用 $emit 代替
 用于计算数据时，应尽量在父组件直接计算后传递给子组件
-
+```
 [slide]
 # GIT 提交规范
 

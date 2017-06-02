@@ -15,18 +15,17 @@ files: /js/demo.js,/css/demo.css
 # 小工具
 
 [slide]
-# 移动端弹性布局
+# 移动端弹性布局 
+
+[slide]内容优先，移动优先
+
 * 百分比
 * meida query
-* rem
-https://dmodaii.github.io/2016/06/21/rem-flexible/
+* [rem](https://dmodaii.github.io/2016/06/21/rem-flexible/)
+* [dpr-flexible](https://dmodaii.github.io/2016/06/21/dpr-flexible/)
+* [flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
 
-* dpr-flexible
-https://dmodaii.github.io/2016/06/21/dpr-flexible/
-
-* flexbox
-https://dmodaii.github.io/2016/06/22/flexbox/
-
+# 移动端布局主要问题
 [slide]
 # border 1px
 在dpr为2的屏幕上只需要0.5px即显示为表物理物理像素上的1px, 然而0.5px在某些设备上并不支持
@@ -61,7 +60,7 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 }
 ```
 [slide]
-# 图片
+# 高清图片
 - css图片
 
 在不同dpr分辨率下显示对应最合适的图片， 使图片高清显示
@@ -83,12 +82,11 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 [大图](https://betacs.101.com/v0.1/static/preproduction_content_cscommon/avatar/2107161302/2107161302.jpg?size=640)
 
 [slide]
-# 配合缩放页面方式
+# 配合缩放页面方式解决以上问题
 
 - 根据当前dpr设置页面缩放和根字体大小
 - 页面尺寸变化和页面重载重新设置页面缩放和字体大小
 >强烈建议大家采用统一标准来计算rem基准，特别是公用组件，否则公用组件的rem的相对值有问题不能使用，需要全部覆写css
-[flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
 
 [slide]
 
@@ -168,6 +166,8 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 ```
 [/magic]
 
+# 字体大小问题
+在不缩放页面的方案中， 字体都按照设计图（dpr2）大小/2 写字体
 
 [slide]
 # flexbox 弹性盒子
@@ -176,8 +176,11 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 
 >谨记需配合和box-sizing: border-box使用, 否则单个flex元素的大小会受影响
 
+[flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
+
 [slide] 
 [实际效果1](http://www.dayhr.com/views/perf/app.html#!/message/5000000138691013/5000000138683084/1/0) 
+
 [实际效果2](http://www.dayhr.com/views/perf/app.html#!/remind/5000000138690994?data=[2,3,5]&title=aa)
 
 <div class="columns-2">
@@ -250,7 +253,8 @@ https://dmodaii.github.io/2016/06/22/flexbox/
 
 [slide]
 ----
-* 多语言 {:&.fadeIn}
+<!--* 多语言 {:&.fadeIn}-->
+* 多语言
     * i18n {:&.动效类型}
 * 开发调试工具
     * Vue.js devtools
@@ -259,4 +263,8 @@ https://dmodaii.github.io/2016/06/22/flexbox/
     * hexo博客 https://hexo.io/zh-cn/docs/commands.html
     * nodePPT
     * [emoji gitmessage commit](https://gitmoji.carloscuesta.me/)
+
+
+[slide]
+# THANKS
 

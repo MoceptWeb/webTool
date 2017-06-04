@@ -239,35 +239,168 @@ files: /js/demo.js,/css/demo.css
 >如果您的应用够简单，您最好不要使用Vuex {:&.pull-right}
 
 [slide]
-## 代码格式化
-### 使用 `highlightjs` 进行语法高亮
+Action type
+使用常量定义好对应的actionType，用来接收对应的action以及触发的mutate
+
+```javascript
+import {
+  FETCH_LOG_LIST,
+  DELETE_LOG
+} from '../constants'
+```
+
+[slide]
+state和getters
 ----
 <div class="columns-2">
-    <pre><code class="javascript">(function(window, document){
-    var a = 1;
-    var test = function(){
-        var b = 1;
-        alert(b);
-    };
-    //泛数组转换为数组
-    function toArray(arrayLike) {
-        return [].slice.call(arrayLike);
-    }
-}(window, document));
+    <pre><code class="javascript">
+const state = {
+  logList: {
+    time: null,
+    items: []
+  },
+  logInfo: {
+  }
+}
     </code></pre>
-    <pre><code class="javascript">(function(window, document){
-    var a = 1;
-    var test = function(){
-        var b = 1;
-        alert(b);
-    };
-    //泛数组转换为数组
-    function toArray(arrayLike) {
-        return [].slice.call(arrayLike);
-    }
-}(window, document));
+
+    <pre><code class="javascript">
+const getters = {
+  logList: state => state.logList,
+  logInfo: state => state.logInfo
+}
     </code></pre>
 </div>
+
+
+[slide]
+action和mutate
+
+```javascript
+const actions = {
+  fetchLogList: createAction(FETCH_LOG_LIST, payload => {
+    return request(`${base}/records`, {
+      params: payload
+    }).then(response => {
+      return {
+        count: 28,
+        items: response
+      }
+    })
+  })
+}
+```
+```javascript
+const mutations = {
+  [FETCH_LOG_LIST]: handleAction({
+    success: (state, mutation) => {
+      state.logList = mutation
+      state.logList.time = Date.now()
+    },
+    error: state => {
+      state.logList.time = Date.now()
+    }
+  })
+}
+```
+
+
+[slide]
+暴露state供外部调用
+
+```javascript
+export default {
+  state,
+  getters,
+  actions,
+  mutations
+}
+```
+[slide]
+progress
+
+[slide]
+store
+
+```javascript
+
+const SET_PROGRESS = 'SET_PROGRESS'
+const state = {
+  progress: 0
+}
+const getters = {
+  progress: state => state.progress
+}
+const actions = {
+  setProgress ({ commit }, progress) {
+    commit(SET_PROGRESS, progress)
+    if (progress === 100) {
+      setTimeout(() => {
+        commit(SET_PROGRESS, 0)
+      }, 500)
+    }
+  }
+}
+const mutations = {
+  [SET_PROGRESS] (state, payload) {
+    state.progress = payload
+  }
+}
+```
+
+[slide]
+router
+
+```javascript
+router.beforeEach((to, from, next) => {
+  store.dispatch('setProgress', 80)
+  if (to.matched.some(m => m.meta.auth) && !store.getters.authorized) {
+    next('/')
+  } else {
+    next()
+  }
+})
+
+router.afterEach(() => {
+  store.dispatch('setProgress', 100)
+})
+```
+
+[slide]
+view
+```
+<c-progress id="progress"
+  v-show="progress"
+  :progress="progress"></c-progress>
+
+...mapGetters(['authorized', 'lang', 'i18n', 'progress', 'toast']),
+
+```
+
+### 使用 `translate3d` 实现动画
+----
+```
+<template>
+  <div class="c-progress">
+    <div class="c-progress-content"
+      :style="{transform: 'translate3d(-' + (100 - progress) + '%, 0, 0)'}"></div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    progress: {
+      type: Number,
+      default: 0,
+      validator (val) {
+        return +val >= 0 && +val <= 100
+      }
+    }
+  }
+}
+</script>
+<style src="styles/components/core/progress"></style>
+```
 
 
 

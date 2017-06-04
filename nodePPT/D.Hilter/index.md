@@ -10,14 +10,14 @@ files: /js/demo.js,/css/demo.css
 ## 演讲者：D.Hilter
 
 [slide]
-# 移动端弹性布局 
-# Vuex 开发相关 
+# 移动端弹性布局
+# Vuex 开发相关
 # 小工具
 
 [slide]
-# 移动端弹性布局 
+# 移动端弹性布局
 
-[slide]内容优先，移动优先
+[slide] 内容优先，移动优先
 
 * 百分比
 * meida query
@@ -103,20 +103,22 @@ files: /js/demo.js,/css/demo.css
         var setDpr = function() {
             docEl.setAttribute("data-dpr",dpr);
             var content = 'initial-scale=' + scale + ',maximum-scale='
-             + scale + ',minimum-scale=' + scale + 
+             + scale + ',minimum-scale=' + scale +
              ',user-scalable=no,width=device-width';
             if ($viewport) {
                 $viewport.setAttribute('content', content);
             } else {
-                var metaViewport = 
+                var metaViewport =
                 '<meta name="viewport" content="' + content + '"/>';
                 document.write(metaViewport);
             }
             var width = docEl.clientWidth;
             if (width / dpr > 450) {
                 width = dpr * 450;
+                /* 使页面居中显示
                 docEl.querySelector('body').style.width = 450;
                 docEl.querySelector('body').style.margin = '0 auto';
+                */
             }
             var fontSize = width / designWidth * 100;
             docEl.style.fontSize = fontSize + 'px';
@@ -167,7 +169,25 @@ files: /js/demo.js,/css/demo.css
 [/magic]
 
 # 字体大小问题
-在不缩放页面的方案中， 字体都按照设计图（dpr2）大小/2 写字体
+
+- rem
+字体大小由根font-size相对大小设置，对于不同宽度的屏幕（当前可以设置超过某一最大宽度后固定最大根font-size，防止字体过大）
+- px
+字体大小只和当前dpr有关
+
+```css
+@define-mixin dpr-font $font-size{
+      [data-dpr="1"] & {
+          font-size: calc($font-size / 2);
+      }
+      [data-dpr="2"] & {
+        font-size: $font-size;
+      }
+      [data-dpr="3"] & {
+        font-size: calc($font-size * 3 / 2);
+      }
+}
+```
 
 [slide]
 # flexbox 弹性盒子
@@ -178,8 +198,8 @@ files: /js/demo.js,/css/demo.css
 
 [flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
 
-[slide] 
-[实际效果1](http://www.dayhr.com/views/perf/app.html#!/message/5000000138691013/5000000138683084/1/0) 
+[slide]
+[实际效果1](http://www.dayhr.com/views/perf/app.html#!/message/5000000138691013/5000000138683084/1/0)
 
 [实际效果2](http://www.dayhr.com/views/perf/app.html#!/remind/5000000138690994?data=[2,3,5]&title=aa)
 
@@ -190,17 +210,17 @@ files: /js/demo.js,/css/demo.css
 
 
 [slide]
-# vuex 状态管理
+# Vuex 状态管理
 它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化
 
 [slide]
-- State: 
+- State:
     - 状态树: 包含所有应用级别状态的对象
-- Action: 
+- Action:
     - 组件内部用来分发 mutation 事件的函数
-- Mutation: 
+- Mutation:
     - 修改状态的事件回调函数（更改 Vuex 的 store 中的状态的唯一方法是提交 mutation）
-- Getter: 
+- Getter:
     - 在组件内部获取 store 中状态的函数（可以认为是 store 的计算属性）
 
 >mutation 都是同步事务.Action 提交的是 mutation，而不是直接变更状态。Action 可以包含任意异步操作。{:&.pull-right}
@@ -267,4 +287,3 @@ files: /js/demo.js,/css/demo.css
 
 [slide]
 # THANKS
-

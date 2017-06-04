@@ -317,7 +317,7 @@ export default {
 }
 ```
 [slide]
-progress
+Progress
 
 [slide]
 store
@@ -401,8 +401,99 @@ export default {
 </script>
 <style src="styles/components/core/progress"></style>
 ```
+[slide]
+# Vuex  plugins
+
+```js
+const plugins = [
+  store => {
+    // 实现进度条、错误提示
+    store.subscribe(({ payload }) => {
+      if (!payload || !payload.__status__) {
+        return
+      }
+      switch (payload.__status__) {
+        case 'pending':
+          store.dispatch('setProgress', 60)
+          break
+        case 'success':
+          store.dispatch('setProgress', 100)
+          break
+        case 'error':
+          store.dispatch('setProgress', 100)
+          store.dispatch('addToast', payload.__payload__)
+          break
+        default:
+      }
+    })
+  }
+]
+
+import plugins from './plugins'
+Vue.use(Vuex)
+export default new Vuex.Store({
+  modules,
+  plugins
+})
+```
+
+[slide] Toast
+
+[slide] state
+```
+const state = {
+  toast: null
+}
+const getters = {
+  toast: state => state.toast
+}
+let timeoutId
+const actions = {
+  addToast ({ state, commit }, payload) {
+    function doAddToast () {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      commit(ADD_TOAST, payload)
+      timeoutId = setTimeout(() => {
+        commit(DELETE_TOAST)
+      }, 3000)
+    }
+    if (state.toast) {
+      setTimeout(doAddToast, 3000)
+    } else {
+      doAddToast()
+    }
+  }
+}
+const mutations = {
+  [ADD_TOAST] (state, payload) {
+    state.toast = payload
+  },
+
+  [DELETE_TOAST] (state) {
+    state.toast = null
+  }
+}
+```
+
+[slide] view
+
+```
+<transition name="fade">
+  <c-toast v-if="toast"> {{toast}} </c-toast>
+</transition>
+```
+
+[slide] 具体页面的Vuex
+
+# 列表
+# 修改删除
 
 
+[slide]
+
+大树state小树里面的data
 
 [slide]
 ----

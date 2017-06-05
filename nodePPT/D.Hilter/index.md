@@ -12,19 +12,19 @@ files: /js/demo.js,/css/demo.css
 [slide]
 # 移动端弹性布局
 # Vuex 开发相关
-# 小工具
 
 [slide]
 # 移动端弹性布局
 
-[slide] 内容优先，移动优先
-
+[slide] 
+# 内容优先，移动优先
 * 百分比
 * meida query
 * [rem](https://dmodaii.github.io/2016/06/21/rem-flexible/)
 * [dpr-flexible](https://dmodaii.github.io/2016/06/21/dpr-flexible/)
 * [flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
 
+[slide]
 # 移动端布局主要问题
 [slide]
 # border 1px
@@ -61,7 +61,7 @@ files: /js/demo.js,/css/demo.css
 ```
 [slide]
 # 高清图片
-- css图片
+- css静态图片
 
 在不同dpr分辨率下显示对应最合适的图片， 使图片高清显示
 ```css
@@ -168,6 +168,7 @@ files: /js/demo.js,/css/demo.css
 ```
 [/magic]
 
+[slide] 
 # 字体大小问题
 
 - rem
@@ -189,12 +190,27 @@ files: /js/demo.js,/css/demo.css
 }
 ```
 
+> 具体要看设计，在各种屏幕上想要保持怎样的字体或者某些位置的地体需要特殊显示 
+
+
+
 [slide]
 # flexbox 弹性盒子
 - 各种对齐形式：垂直水平居中，左右对齐
 - 不知道个数还要自适应
 
 >谨记需配合和box-sizing: border-box使用, 否则单个flex元素的大小会受影响
+
+[slide]
+# flex 容器
+- `flex-flow`  属性决定主轴的方向（即项目的排列方向）
+- `flex-wrap` 如果一条轴线排不下，如何换行
+- `justify-content` 属性定义了项目在主轴上的对齐方式
+- `align-items` 定义项目在交叉轴上如何对齐
+- `align-content` 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+
+# flex元素
+- `align-self` 设置或检索弹性盒模型对象的子元素如何分配空间
 
 [flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
 
@@ -232,10 +248,10 @@ files: /js/demo.js,/css/demo.css
 
 [slide]
 # 适用场景
-- 共享数据多的应用(在最外层app经常使用的变化状态， 例如progress， toast; 还有全局认证信息)
+- 共享数据多的模块(在最外层app经常使用的变化状态， 例如progress， toast; 还有全局认证信息)
 - 多个组件依赖于同一状态， 来自不同组件的行为需要变更同一状态(修改对应某条数据进入编辑页面需要保存状态)
 - vue实例内做的操作和数据的计算现在都交由对象store来做， 希望简化和清晰化vue页面的应用
-
+- 多个兄弟组件公用数据， 但是简单的父子组件可以直接用$emit即可
 >如果您的应用够简单，您最好不要使用Vuex {:&.pull-right}
 
 [slide]
@@ -483,12 +499,27 @@ const mutations = {
 <transition name="fade">
   <c-toast v-if="toast"> {{toast}} </c-toast>
 </transition>
+
 ```
 
-[slide] 具体页面的Vuex
+### 使用 `transition` 实现动画
+```css
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
 
-# 列表
-# 修改删除
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+```
+
+[slide] 
+# 具体页面的Vuex
+
+- 获取列表
+- 修改删除
 
 
 [slide]

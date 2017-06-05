@@ -229,6 +229,8 @@ files: /js/demo.js,/css/demo.css
 # Vuex 状态管理
 它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化
 
+> 形式化了集中处理数据存储的过程，并提供了所有功能方法去处理那些数据
+
 [slide]
 - State:
     - 状态树: 包含所有应用级别状态的对象
@@ -518,13 +520,103 @@ const mutations = {
 [slide] 
 # 具体页面的Vuex
 
-- 获取列表
-- 修改删除
-
-
 [slide]
+# [获取列表](http://192.168.50.163:4444/md/index.md#18)
+通过store中定义好的action: fetchLogList来修改对应的getters：logList然后通过mapGetters获取
 
-大树state小树里面的data
+
+```
+...mapGetters(['logList', 'logInfo'])
+
+...mapActions(['fetchLogList', 'deleteLog'])
+
+```
+
+>state树种存储各种`元数据`, 供各种其他模块使用
+
+
+[slide] 
+
+[magic data-transition="earthquake"]
+## 删除修改
+-----
+```
+const actions = {
+  deleteLog: createAction(DELETE_LOG, payload => {
+    const { id } = payload
+    return request(`${base}/records/${id}`, {
+      method: 'delete'
+    })
+  })
+const mutations = {
+  [DELETE_LOG]: handleAction({
+    success: (state, mutation) => {
+      state.logInfo = {
+        time: Date.now(),
+        delete: true
+      }
+    },
+    error: state => {
+      state.logInfo.delete = false
+    }
+  })
+}
+```
+========
+## 在对应的views页面监听对应状态做对应修改
+-----
+
+```
+  watch: {
+    'logList' (newVal, oldVal) {
+      this.fetchLog = false
+      this.loading = false
+      if (this.items.length === 0) {
+        this.noData = true
+      }
+      this.items = !this.firstLoad ? this.items.concat(newVal.items) : newVal.items
+      if (this.items.length === newVal.count && newVal.count !== 0) {
+        this.noMore = true
+        this.showMore = true
+      }
+      this.firstLoad = false
+    },
+    'logInfo.time' () {
+      if (this.logInfo.delete) {
+        const deleteId = this.deleteId
+        this.deleteDone = true
+        setTimeout(() => {
+          this.items = this.items.filter(item => {
+            return item.record_id !== deleteId
+          })
+          this.deleteDone = false
+          this.deleteId = undefined
+          if (this.items.length === 0) {
+            this.reset()
+          }
+        }, 1000)
+      }
+    }
+  }
+```
+[/magic]
+
+[slide] state的数据存储
+- vuex 中state是直接存在内存中的
+- 也可以定制化存在localStorage(依模块需要)
+
+```
+import createPersist from 'vuex-localstorage'
+const persist = createPersist(ENV_KEY, {
+  lang: navigator.language.split('-')[0],
+  i18n: null,
+  transition: true, // 默认开启动画效果
+  authorized: false
+}, {
+  expires: ONE_WEEK
+})
+const state = persist.get()
+```
 
 [slide]
 ----
@@ -538,7 +630,6 @@ const mutations = {
     * hexo博客 https://hexo.io/zh-cn/docs/commands.html
     * nodePPT
     * [emoji gitmessage commit](https://gitmoji.carloscuesta.me/)
-
 
 [slide]
 # THANKS

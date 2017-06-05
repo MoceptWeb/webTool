@@ -6,12 +6,9 @@ files: /js/demo.js,/css/demo.css
 
 [slide]
 
-# vue
-## 演讲者：D.Hilter
+# 移动端弹性布局和Vuex
+## 演讲者：戴智明
 
-[slide]
-# 移动端弹性布局
-# Vuex 开发相关
 
 [slide]
 # 移动端弹性布局
@@ -232,14 +229,12 @@ files: /js/demo.js,/css/demo.css
 > 形式化了集中处理数据存储的过程，并提供了所有功能方法去处理那些数据
 
 [slide]
-- State:
-    - 状态树: 包含所有应用级别状态的对象
-- Action:
-    - 组件内部用来分发 mutation 事件的函数
-- Mutation:
-    - 修改状态的事件回调函数（更改 Vuex 的 store 中的状态的唯一方法是提交 mutation）
-- Getter:
-    - 在组件内部获取 store 中状态的函数（可以认为是 store 的计算属性）
+- `State` 状态树: 包含所有应用级别状态的对象
+- `Action` 组件内部用来分发 mutation 事件的函数
+- `Mutation` 修改状态的事件回调函数（更改 Vuex 的 store 中的状态的唯一方法是提交 mutation）
+- `Getter`  在组件内部获取 store 中状态的函数（可以认为是 store 的计算属性）
+
+
 
 >mutation 都是同步事务.Action 提交的是 mutation，而不是直接变更状态。Action 可以包含任意异步操作。{:&.pull-right}
 
@@ -293,6 +288,14 @@ const getters = {
 
 [slide]
 action和mutate
+
+```javascript
+Action type 使用常量定义好对应的actionType，用来接收对应的action以及触发的mutate
+import {
+  FETCH_LOG_LIST,
+  DELETE_LOG
+} from '../constants'
+```
 
 ```javascript
 const actions = {
@@ -562,6 +565,12 @@ const mutations = {
   })
 }
 ```
+========
+## 保存各种小数据
+- 如果可以通过父子组件传递，则尽量不污染state
+- 添加唯一标识符来确认自己存储的小数据
+例如根据某条数据编辑表单数据时候就可以存储该条数据在特定state中，切换到另外一调数据时候，先更改存储的state信息
+
 ========
 ## 在对应的views页面监听对应状态做对应修改
 -----

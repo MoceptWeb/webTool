@@ -1,0 +1,766 @@
+<!--
+    Powered By nodePPT - This is probably the best web presentation tool so far!
+    version: 1.4.2
+    site: https://github.com/ksky521/nodePPT
+    date: 
+-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>vue - By D.Hilter</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+    
+<link rel="stylesheet" href="./css/theme.moon.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>移动端弹性布局和Vuex</h1>
+<h2>演讲者：戴智明</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>移动端弹性布局</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>内容优先，移动优先</h1>
+<ul>
+<li>百分比</li>
+<li>meida query</li>
+<li><a href="https://dmodaii.github.io/2016/06/21/rem-flexible/" target="_blank">rem</a></li>
+<li><a href="https://dmodaii.github.io/2016/06/21/dpr-flexible/" target="_blank">dpr-flexible</a></li>
+<li><a href="https://dmodaii.github.io/2016/06/22/flexbox/" target="_blank">flexbox</a></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>移动端布局主要问题</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>border 1px</h1>
+<p>在dpr为2的屏幕上只需要0.5px即显示为表物理物理像素上的1px, 然而0.5px在某些设备上并不支持</p>
+<pre><code class="css">@define-mixin border-1px $color {
+  position: relative;
+  &amp;:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid $color;
+    width: 100%;
+    content: &#39;&#39;;
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
+    &amp;:after {
+      transform: scaleY(0.67);
+    }
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
+    &amp;:after {
+      transform: scaleY(0.5);
+    }
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
+    &amp;:after {
+      transform: scaleY(0.3);
+    }
+  }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>高清图片</h1>
+<ul>
+<li>css静态图片</li>
+</ul>
+<p>在不同dpr分辨率下显示对应最合适的图片， 使图片高清显示</p>
+<pre><code class="css">@define-mixin dpr-img $image, $size: 100% 100%{
+    background-size: $size;
+    background-image: url(../../images/mobile/$(image)@2x.png);
+    @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
+     background-image: url(../../images/mobile/$(image)@3x.png);
+    }
+}
+</code></pre>
+<ul>
+<li><p>动态图片</p>
+<p>直接通过图片url载入的图片图需要图片服务器支持</p>
+</li>
+</ul>
+<p><a href="https://betacs.101.com/v0.1/static/preproduction_content_cscommon/avatar/2107161302/2107161302.jpg?size=80" target="_blank">小图</a>
+<a href="https://betacs.101.com/v0.1/static/preproduction_content_cscommon/avatar/2107161302/2107161302.jpg?size=320" target="_blank">中图</a>
+<a href="https://betacs.101.com/v0.1/static/preproduction_content_cscommon/avatar/2107161302/2107161302.jpg?size=640" target="_blank">大图</a></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>配合缩放页面方式解决以上问题</h1>
+<ul>
+<li>根据当前dpr设置页面缩放和根字体大小</li>
+<li>页面尺寸变化和页面重载重新设置页面缩放和字体大小<blockquote>
+<p>强烈建议大家采用统一标准来计算rem基准，特别是公用组件，否则公用组件的rem的相对值有问题不能使用，需要全部覆写css</p>
+</blockquote>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"   data-on-build="Slide.magic" data-on-enter="Slide.magic.init"><section class="slide-wrapper"><div class="magic"><div class="magicItem current pagedown"  data-transition="earthquake"><article>
+<div class="magic-wrapper">
+<hgroup>
+<h2>改变viewport和font-size</h2>
+
+</hgroup><article>
+
+<pre><code>(function(designWidth) {
+        &#39;use strict&#39;;
+        var docEl = document.documentElement;
+        var dpr = Math.min(Math.floor(window.devicePixelRatio), 3);
+        var scale = 1 / dpr;
+        var $viewport = document.querySelector(&#39;meta[name=&quot;viewport&quot;]&#39;);
+        var setDpr = function() {
+            docEl.setAttribute(&quot;data-dpr&quot;,dpr);
+            var content = &#39;initial-scale=&#39; + scale + &#39;,maximum-scale=&#39;
+             + scale + &#39;,minimum-scale=&#39; + scale +
+             &#39;,user-scalable=no,width=device-width&#39;;
+            if ($viewport) {
+                $viewport.setAttribute(&#39;content&#39;, content);
+            } else {
+                var metaViewport =
+                &#39;&lt;meta name=&quot;viewport&quot; content=&quot;&#39; + content + &#39;&quot;/&gt;&#39;;
+                document.write(metaViewport);
+            }
+            var width = docEl.clientWidth;
+            if (width / dpr &gt; 450) {
+                width = dpr * 450;
+                /* 使页面居中显示
+                docEl.querySelector(&#39;body&#39;).style.width = 450;
+                docEl.querySelector(&#39;body&#39;).style.margin = &#39;0 auto&#39;;
+                */
+            }
+            var fontSize = width / designWidth * 100;
+            docEl.style.fontSize = fontSize + &#39;px&#39;;
+        }
+
+        setDpr();
+        window.addEventListener(&#39;resize&#39;, setDpr);
+        document.addEventListener(&#39;DOMContentLoaded&#39;, setDpr);
+    })(640);
+</code></pre>
+</article>
+</div>
+</article></div>
+<div class="magicItem next pagedown"  data-transition="earthquake"><article>
+<div class="magic-wrapper">
+<hgroup>
+<h2>border-1px和img</h2>
+
+</hgroup><article>
+
+<pre><code>@define-mixin dpr-img $image, $size: 100% 100%{
+    background-size: $size;
+    [data-dpr=&quot;1&quot;] &amp; {
+      background-image: url(../../images/mobile/$(image)@2x.png);
+    }
+    [data-dpr=&quot;2&quot;] &amp; {
+      background-image: url(../../images/mobile/$(image)@2x.png);
+    }
+    [data-dpr=&quot;3&quot;] &amp; {
+      background-image: url(../../images/mobile/$(image)@3x.png);
+    }
+}
+@define-mixin border-1px $color {
+  position: relative;
+  &amp;:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    content: &#39;&#39;;
+    [data-dpr=&quot;1&quot;] &amp; {
+      border-top: 1px solid $color;
+    }
+    [data-dpr=&quot;2&quot;] &amp; {
+      border-top: 2px solid $color;
+    }
+    [data-dpr=&quot;3&quot;] &amp; {
+      border-top: 3px solid $color;
+    }
+  }
+</code></pre>
+</article>
+</div>
+</article></div></div></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>字体大小问题</h1>
+<ul>
+<li>rem
+字体大小由根font-size相对大小设置，对于不同宽度的屏幕（当前可以设置超过某一最大宽度后固定最大根font-size，防止字体过大）</li>
+<li>px
+字体大小只和当前dpr有关</li>
+</ul>
+<pre><code class="css">@define-mixin dpr-font $font-size{
+      [data-dpr=&quot;1&quot;] &amp; {
+          font-size: calc($font-size / 2);
+      }
+      [data-dpr=&quot;2&quot;] &amp; {
+        font-size: $font-size;
+      }
+      [data-dpr=&quot;3&quot;] &amp; {
+        font-size: calc($font-size * 3 / 2);
+      }
+}
+</code></pre>
+<blockquote>
+<p>具体要看设计，在各种屏幕上想要保持怎样的字体或者某些位置的地体需要特殊显示</p>
+</blockquote>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>flexbox 弹性盒子</h1>
+<ul>
+<li>各种对齐形式：垂直水平居中，左右对齐</li>
+<li>不知道个数还要自适应</li>
+</ul>
+<blockquote>
+<p>谨记需配合和box-sizing: border-box使用, 否则单个flex元素的大小会受影响</p>
+</blockquote>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>flex 容器</h1>
+<ul>
+<li><code>flex-flow</code>  属性决定主轴的方向（即项目的排列方向）</li>
+<li><code>flex-wrap</code> 如果一条轴线排不下，如何换行</li>
+<li><code>justify-content</code> 属性定义了项目在主轴上的对齐方式</li>
+<li><code>align-items</code> 定义项目在交叉轴上如何对齐</li>
+<li><code>align-content</code> 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</li>
+</ul>
+<h1>flex元素</h1>
+<ul>
+<li><code>align-self</code> 设置或检索弹性盒模型对象的子元素如何分配空间</li>
+</ul>
+<p><a href="https://dmodaii.github.io/2016/06/22/flexbox/" target="_blank">flexbox</a></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p><a href="http://www.dayhr.com/views/perf/app.html#!/message/5000000138691013/5000000138683084/1/0" target="_blank">实际效果1</a></p>
+<p><a href="http://www.dayhr.com/views/perf/app.html#!/remind/5000000138690994?data=[2,3,5]&amp;title=aa" target="_blank">实际效果2</a></p>
+<div class="columns-2">
+    <img class="img_show" src='./img/flexbox1.png'/>
+    <img class="img_show" src='./img/flexbox2.png'/>
+</div>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Vuex 状态管理</h1>
+<p>它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化</p>
+<blockquote>
+<p>形式化了集中处理数据存储的过程，并提供了所有功能方法去处理那些数据</p>
+</blockquote>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<ul>
+<li><code>State</code> 状态树: 包含所有应用级别状态的对象</li>
+<li><code>Action</code> 组件内部用来分发 mutation 事件的函数</li>
+<li><code>Mutation</code> 修改状态的事件回调函数（更改 Vuex 的 store 中的状态的唯一方法是提交 mutation）</li>
+<li><code>Getter</code>  在组件内部获取 store 中状态的函数（可以认为是 store 的计算属性）</li>
+</ul>
+<blockquote>
+<p class="pull-right"><span>mutation 都是同步事务.Action 提交的是 mutation，而不是直接变更状态。Action 可以包含任意异步操作。<span></p>
+</blockquote>
+<!--## 参考资料
+- https://dmodaii.github.io/2017/04/19/flux/
+- https://vuex.vuejs.org/zh-cn/
+-->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>适用场景</h1>
+<ul>
+<li>共享数据多的模块(在最外层app经常使用的变化状态， 例如progress， toast; 还有全局认证信息)</li>
+<li>多个组件依赖于同一状态， 来自不同组件的行为需要变更同一状态(修改对应某条数据进入编辑页面需要保存状态)</li>
+<li>vue实例内做的操作和数据的计算现在都交由对象store来做， 希望简化和清晰化vue页面的应用</li>
+<li>多个兄弟组件公用数据， 但是简单的父子组件可以直接用$emit即可<blockquote class="pull-right">
+<p>如果您的应用够简单，您最好不要使用Vuex</p>
+</blockquote>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>Action type
+使用常量定义好对应的actionType，用来接收对应的action以及触发的mutate</p>
+<pre><code class="javascript">import {
+  FETCH_LOG_LIST,
+  DELETE_LOG
+} from &#39;../constants&#39;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>state和getters</h2>
+<div class="columns-2">
+    <pre><code class="javascript">
+const state = {
+  logList: {
+    time: null,
+    items: []
+  },
+  logInfo: {
+  }
+}
+    </code></pre>
+
+    <pre><code class="javascript">
+const getters = {
+  logList: state => state.logList,
+  logInfo: state => state.logInfo
+}
+    </code></pre>
+</div>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>action和mutate</p>
+<pre><code class="javascript">Action type 使用常量定义好对应的actionType，用来接收对应的action以及触发的mutate
+import {
+  FETCH_LOG_LIST,
+  DELETE_LOG
+} from &#39;../constants&#39;
+</code></pre>
+<pre><code class="javascript">const actions = {
+  fetchLogList: createAction(FETCH_LOG_LIST, payload =&gt; {
+    return request(`${base}/records`, {
+      params: payload
+    }).then(response =&gt; {
+      return {
+        count: 28,
+        items: response
+      }
+    })
+  })
+}
+</code></pre>
+<pre><code class="javascript">const mutations = {
+  [FETCH_LOG_LIST]: handleAction({
+    success: (state, mutation) =&gt; {
+      state.logList = mutation
+      state.logList.time = Date.now()
+    },
+    error: state =&gt; {
+      state.logList.time = Date.now()
+    }
+  })
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>暴露state供外部调用</p>
+<pre><code class="javascript">export default {
+  state,
+  getters,
+  actions,
+  mutations
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>Progress</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>store</p>
+<pre><code class="javascript">const SET_PROGRESS = &#39;SET_PROGRESS&#39;
+const state = {
+  progress: 0
+}
+const getters = {
+  progress: state =&gt; state.progress
+}
+const actions = {
+  setProgress ({ commit }, progress) {
+    commit(SET_PROGRESS, progress)
+    if (progress === 100) {
+      setTimeout(() =&gt; {
+        commit(SET_PROGRESS, 0)
+      }, 500)
+    }
+  }
+}
+const mutations = {
+  [SET_PROGRESS] (state, payload) {
+    state.progress = payload
+  }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>router</p>
+<pre><code class="javascript">router.beforeEach((to, from, next) =&gt; {
+  store.dispatch(&#39;setProgress&#39;, 80)
+  if (to.matched.some(m =&gt; m.meta.auth) &amp;&amp; !store.getters.authorized) {
+    next(&#39;/&#39;)
+  } else {
+    next()
+  }
+})
+
+router.afterEach(() =&gt; {
+  store.dispatch(&#39;setProgress&#39;, 100)
+})
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<p>view</p>
+<pre><code>&lt;c-progress id=&quot;progress&quot;
+  v-show=&quot;progress&quot;
+  :progress=&quot;progress&quot;&gt;&lt;/c-progress&gt;
+
+...mapGetters([&#39;authorized&#39;, &#39;lang&#39;, &#39;i18n&#39;, &#39;progress&#39;, &#39;toast&#39;]),
+</code></pre><h3>使用 <code>translate3d</code> 实现动画</h3>
+
+</hgroup><article>
+
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;c-progress&quot;&gt;
+    &lt;div class=&quot;c-progress-content&quot;
+      :style=&quot;{transform: &#39;translate3d(-&#39; + (100 - progress) + &#39;%, 0, 0)&#39;}&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+  props: {
+    progress: {
+      type: Number,
+      default: 0,
+      validator (val) {
+        return +val &gt;= 0 &amp;&amp; +val &lt;= 100
+      }
+    }
+  }
+}
+&lt;/script&gt;
+&lt;style src=&quot;styles/components/core/progress&quot;&gt;&lt;/style&gt;
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Vuex  plugins</h1>
+<pre><code class="js">const plugins = [
+  store =&gt; {
+    // 实现进度条、错误提示
+    store.subscribe(({ payload }) =&gt; {
+      if (!payload || !payload.__status__) {
+        return
+      }
+      switch (payload.__status__) {
+        case &#39;pending&#39;:
+          store.dispatch(&#39;setProgress&#39;, 60)
+          break
+        case &#39;success&#39;:
+          store.dispatch(&#39;setProgress&#39;, 100)
+          break
+        case &#39;error&#39;:
+          store.dispatch(&#39;setProgress&#39;, 100)
+          store.dispatch(&#39;addToast&#39;, payload.__payload__)
+          break
+        default:
+      }
+    })
+  }
+]
+
+import plugins from &#39;./plugins&#39;
+Vue.use(Vuex)
+export default new Vuex.Store({
+  modules,
+  plugins
+})
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>Toast</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>state</p>
+<pre><code>const state = {
+  toast: null
+}
+const getters = {
+  toast: state =&gt; state.toast
+}
+let timeoutId
+const actions = {
+  addToast ({ state, commit }, payload) {
+    function doAddToast () {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      commit(ADD_TOAST, payload)
+      timeoutId = setTimeout(() =&gt; {
+        commit(DELETE_TOAST)
+      }, 3000)
+    }
+    if (state.toast) {
+      setTimeout(doAddToast, 3000)
+    } else {
+      doAddToast()
+    }
+  }
+}
+const mutations = {
+  [ADD_TOAST] (state, payload) {
+    state.toast = payload
+  },
+
+  [DELETE_TOAST] (state) {
+    state.toast = null
+  }
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>view</p>
+<pre><code>&lt;transition name=&quot;fade&quot;&gt;
+  &lt;c-toast v-if=&quot;toast&quot;&gt; {{toast}} &lt;/c-toast&gt;
+&lt;/transition&gt;
+</code></pre><h3>使用 <code>transition</code> 实现动画</h3>
+<pre><code class="css">.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>具体页面的Vuex</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1><a href="http://192.168.50.163:4444/md/index.md#18" target="_blank">获取列表</a></h1>
+<p>通过store中定义好的action: fetchLogList来修改对应的getters：logList然后通过mapGetters获取</p>
+<pre><code>...mapGetters([&#39;logList&#39;, &#39;logInfo&#39;])
+
+...mapActions([&#39;fetchLogList&#39;, &#39;deleteLog&#39;])
+</code></pre><blockquote>
+<p>state树种存储各种<code>元数据</code>, 供各种其他模块使用</p>
+</blockquote>
+
+</article></section></slide>
+<slide class="slide"   data-on-build="Slide.magic" data-on-enter="Slide.magic.init"><section class="slide-wrapper"><div class="magic"><div class="magicItem current pagedown"  data-transition="earthquake"><article>
+<div class="magic-wrapper">
+<hgroup>
+<h2>删除修改</h2>
+
+</hgroup><article>
+
+<pre><code>const actions = {
+  deleteLog: createAction(DELETE_LOG, payload =&gt; {
+    const { id } = payload
+    return request(`${base}/records/${id}`, {
+      method: &#39;delete&#39;
+    })
+  })
+const mutations = {
+  [DELETE_LOG]: handleAction({
+    success: (state, mutation) =&gt; {
+      state.logInfo = {
+        time: Date.now(),
+        delete: true
+      }
+    },
+    error: state =&gt; {
+      state.logInfo.delete = false
+    }
+  })
+}
+</code></pre>
+</article>
+</div>
+</article></div>
+<div class="magicItem next pagedown"  data-transition="earthquake"><article>
+<div class="magic-wrapper">
+<article>
+<h2>保存各种小数据</h2>
+<ul>
+<li>如果可以通过父子组件传递，则尽量不污染state</li>
+<li>添加唯一标识符来确认自己存储的小数据
+例如根据某条数据编辑表单数据时候就可以存储该条数据在特定state中，切换到另外一调数据时候，先更改存储的state信息</li>
+</ul>
+
+</article>
+</div>
+</article></div>
+<div class="magicItem far-next pagedown"  data-transition="earthquake"><article>
+<div class="magic-wrapper">
+<hgroup>
+<h2>在对应的views页面监听对应状态做对应修改</h2>
+
+</hgroup><article>
+
+<pre><code>watch: {
+    &#39;logList&#39; (newVal, oldVal) {
+      this.fetchLog = false
+      this.loading = false
+      if (this.items.length === 0) {
+        this.noData = true
+      }
+      this.items = !this.firstLoad ? this.items.concat(newVal.items) : newVal.items
+      if (this.items.length === newVal.count &amp;&amp; newVal.count !== 0) {
+        this.noMore = true
+        this.showMore = true
+      }
+      this.firstLoad = false
+    },
+    &#39;logInfo.time&#39; () {
+      if (this.logInfo.delete) {
+        const deleteId = this.deleteId
+        this.deleteDone = true
+        setTimeout(() =&gt; {
+          this.items = this.items.filter(item =&gt; {
+            return item.record_id !== deleteId
+          })
+          this.deleteDone = false
+          this.deleteId = undefined
+          if (this.items.length === 0) {
+            this.reset()
+          }
+        }, 1000)
+      }
+    }
+  }
+</code></pre>
+</article>
+</div>
+</article></div></div></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>state的数据存储</p>
+<ul>
+<li>vuex 中state是直接存在内存中的</li>
+<li>也可以定制化存在localStorage(依模块需要)</li>
+</ul>
+<pre><code>import createPersist from &#39;vuex-localstorage&#39;
+const persist = createPersist(ENV_KEY, {
+  lang: navigator.language.split(&#39;-&#39;)[0],
+  i18n: null,
+  transition: true, // 默认开启动画效果
+  authorized: false
+}, {
+  expires: ONE_WEEK
+})
+const state = persist.get()
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+
+<!--* 多语言 {:&.fadeIn}-->
+<ul>
+<li>多语言<ul class="动效类型">
+<li>i18n</li>
+</ul>
+</li>
+<li>开发调试工具<ul>
+<li>Vue.js devtools</li>
+</ul>
+</li>
+<li>一些插件和工具<ul>
+<li>掘金 <a href="https://juejin.im/" target="_blank">https://juejin.im/</a></li>
+<li>hexo博客 <a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank">https://hexo.io/zh-cn/docs/commands.html</a></li>
+<li>nodePPT</li>
+<li><a href="https://gitmoji.carloscuesta.me/" target="_blank">emoji gitmessage commit</a></li>
+</ul>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>THANKS</h1>
+
+</article></section></slide>
+        
+
+        <!-- <slide class="slide logoslide dark nobackground">
+            <article class="flexbox vcenter">
+                <h2 style="color: white;">Powered By nodePPT v1.4.2</h2>
+            </article>
+        </slide> -->
+        <div class="slideTip" id="tip"></div>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<div id="_buttons">
+    <div class="_btn-box" id="_btn-box" style="display:none;">
+        <button class="fa fa-arrow-circle-left" id="_btn-prev"></button>
+        <button class="fa fa-arrow-circle-right" id="_btn-next"></button>
+        <button class="fa fa-paint-brush" id="_btn-brush"></button>
+        <button class="fa fa-compress" id="_btn-overview" data-toggle="fa fa-expand"></button>
+    </div>
+    <button class="fa fa-bars" id="_btn-bar"  data-toggle="fa fa-close"></button>
+</div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = (location.pathname + '#').split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+</script>
+<script src="./js/mixjs/lib/event/broadcast.js"></script>
+<script src="./js/nodeppt.js"></script>
+<script>
+Slide.init({
+    containerID: 'container',
+    drawBoardID: 'drawBoard',
+    slideClass: '.slide',
+    buildClass: '.build',
+    progressID: 'progress',
+    transition: 'cards',
+    width: 1100,
+    dir: './',
+    
+    //打开下面的注释就开启postMessage方式
+    //访问网址127.0.0.1:8080/ppt/demo#client
+    control:{
+        type: 'postMessage',
+        args:{
+            isControl:  false
+        }
+    },
+    
+    tipID: 'tip'
+});
+MixJS.loadJS('highlight/highlight.pack.js',function(){
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script src="./js/demo.js"></script>
+<link rel="stylesheet" href="./css/demo.css">
+
+<!--placeholder-->
+</body>
+</html>

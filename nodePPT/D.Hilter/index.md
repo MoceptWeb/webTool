@@ -20,6 +20,7 @@ files: /js/demo.js,/css/demo.css
 * [rem](https://dmodaii.github.io/2016/06/21/rem-flexible/)
 * [dpr-flexible](https://dmodaii.github.io/2016/06/21/dpr-flexible/)
 * [flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
+* 多列布局
 
 [slide]
 # 移动端布局主要问题

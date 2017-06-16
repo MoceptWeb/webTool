@@ -11,7 +11,6 @@ exports.readFileAsync = function(fpath, encoding) {
       } else {
         resolve(content)
       }
-
     })
   })
 }

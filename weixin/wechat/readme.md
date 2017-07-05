@@ -21,3 +21,5 @@ lt --subdomain klioen --port 4444 或 lt -s mowei -p 4444
 - 拼接已经定义好的消息
 - 包装成xml格式
 - 在5秒内返回
+
+- test

@@ -7,7 +7,7 @@ var getRawBody = require('raw-body')
 var util = require('./util')
 var Wechat = require('./wechat')
 
-module.exports = function (opts) {
+module.exports = function (opts, handler) {
   var wechat = new Wechat(opts)
 
   return function* (next) {
@@ -52,39 +52,13 @@ module.exports = function (opts) {
 
       // 生成key-value
       var message = util.formatMessage(content.xml)
-      // console.log(message)
 
-      if (message.MsgType === 'event') {
-        if (message.Event === 'subscribe') {
-          var now = new Date().getTime(), content = 'sssssssss'
-          that.status = 200
-          that.type = 'application/xml'
-          var reply = '<xml>'
-            + '<ToUserName><![CDATA[' + message.FromUserName + ']]></ToUserName>'
-            + '<FromUserName><![CDATA[' + message.ToUserName + ']]></FromUserName>'
-            + '<CreateTime>' + now + '</CreateTime>'
-            + '<MsgType><![CDATA[text]]></MsgType>'
-            + '<Content><![CDATA[' + content + ']]></Content>'
-            + '</xml>'
-          that.body = reply
-          return
-        }
-      }
+      this.wexin = message;
 
-      if (message.MsgType === 'text') {
-        var now = new Date().getTime(), content = '22'
-        that.status = 200
-        that.type = 'application/xml'
-        var reply = '<xml>'
-          + '<ToUserName><![CDATA[' + message.FromUserName + ']]></ToUserName>'
-          + '<FromUserName><![CDATA[' + message.ToUserName + ']]></FromUserName>'
-          + '<CreateTime>' + now + '</CreateTime>'
-          + '<MsgType><![CDATA[text]]></MsgType>'
-          + '<Content><![CDATA[' + content + ']]></Content>'
-          + '</xml>'
-        that.body = reply
-        return
-      }
+
+      yield handler.call(this, next)
+
+      wechat.reply.call(this)
 
     }
   }

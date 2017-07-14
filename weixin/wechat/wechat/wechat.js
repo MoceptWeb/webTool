@@ -1,5 +1,5 @@
 /**
- * 
+ * 微信认证
  * 每隔2个小时启动刷新一次票据， 保证无论何时调用接口这个票据都是最新的 
  */
 
@@ -12,6 +12,7 @@ var prefix = 'https://api.weixin.qq.com/cgi-bin/'
 var api = {
   accessToken: prefix + 'token?grant_type=client_credential'
 }
+var util = require('./util')
 
 // 管理和微信的接口
 function Wechat(opts) {
@@ -37,14 +38,14 @@ function Wechat(opts) {
       return that.updateAccessToken()
     }
   })
-  .then(function(data) {
-    that.accessToken = data.access_token
-    that.expires_in = data.expires_in
-    that.saveAccessToken(data)
-  })
-  .catch(function(e) {
-    console.log(e)
-  })
+    .then(function(data) {
+      that.accessToken = data.access_token
+      that.expires_in = data.expires_in
+      that.saveAccessToken(data)
+    })
+    .catch(function(e) {
+      console.log(e)
+    })
 }
 
 Wechat.prototype.isValidAccessToken = function(data) {
@@ -80,5 +81,12 @@ Wechat.prototype.updateAccessToken = function() {
 
 }
 
+
+Wechat.prototype.reply = function() {
+  var content = this.body, message = this.wexin, xml = util.tpl(content, message)
+  this.status = 200;
+  this.type = 'application/xml'
+  this.body = xml
+}
 
 module.exports = Wechat

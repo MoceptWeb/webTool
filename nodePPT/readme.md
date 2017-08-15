@@ -28,3 +28,4 @@ nodeppt path -o output/path -a
 P：开画板
 C：清除画板
 O: 轮播形式打开ppt
+enter 选择

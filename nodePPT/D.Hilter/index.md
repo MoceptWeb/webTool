@@ -28,6 +28,8 @@ files: /js/demo.js,/css/demo.css
 # border 1px
 在dpr为2的屏幕上只需要0.5px即显示为表物理物理像素上的1px, 然而0.5px在某些设备上并不支持
 
+> 目前色合计是给的dpr2的640的设计图的border都是是2px
+
 ```css
 @define-mixin border-1px $color {
   position: relative;
@@ -57,6 +59,10 @@ files: /js/demo.js,/css/demo.css
   }
 }
 ```
+
+
+
+
 [slide]
 # 高清图片
 - css静态图片
@@ -80,7 +86,15 @@ files: /js/demo.js,/css/demo.css
 [大图](https://betacs.101.com/v0.1/static/preproduction_content_cscommon/avatar/2107161302/2107161302.jpg?size=640)
 
 [slide]
-# 配合缩放页面方式解决以上问题
+# 字体大小
+
+- 直接px（但是是写的应该是dpr为1时候的px）
+- 将px按照一定比例换算为rem
+
+> 具体两者区别将在下面介绍
+
+[slide]
+# dpr配合缩放页面方式解决以上问题
 
 - 根据当前dpr设置页面缩放和根字体大小
 - 页面尺寸变化和页面重载重新设置页面缩放和字体大小
@@ -111,6 +125,7 @@ files: /js/demo.js,/css/demo.css
                 document.write(metaViewport);
             }
             var width = docEl.clientWidth;
+            // 自定义最大宽度的显示效果
             if (width / dpr > 450) {
                 width = dpr * 450;
                 /* 使页面居中显示
@@ -170,9 +185,9 @@ files: /js/demo.js,/css/demo.css
 # 字体大小问题
 
 - rem
-字体大小由根font-size相对大小设置，对于不同宽度的屏幕（当前可以设置超过某一最大宽度后固定最大根font-size，防止字体过大）
+字体大小由根font-size相对大小设置，对于不同宽度的屏幕（当前可以设置超过某一最大宽度后固定最大根font-size，防止字体过大）， 在当前设置的基准rem下， 其余px/100得到正确的rem
 - px
-字体大小只和当前dpr有关
+字体大小只和当前dpr有关， 如果全部采用px来写字体大小和行高则需要对应在不同的dpr上做对应转换
 
 ```css
 @define-mixin dpr-font $font-size{
@@ -186,9 +201,16 @@ files: /js/demo.js,/css/demo.css
         font-size: calc($font-size * 3 / 2);
       }
 }
+
+.font-22-24{
+font-size: .22rem;
+line-height: .24rem;
+}
 ```
 
 > 具体要看设计，在各种屏幕上想要保持怎样的字体或者某些位置的地体需要特殊显示 
+1、要针对相同dpr、 不同宽度的设备的是要显示同样的字体大小就用px方式
+2、要针对相同dpr、 不同宽度的设备的是不同的字体大小小就用rem方式
 
 
 
@@ -201,27 +223,27 @@ files: /js/demo.js,/css/demo.css
 
 [slide]
 # flex 容器
-- `flex-flow`  属性决定主轴的方向（即项目的排列方向）
-- `flex-wrap` 如果一条轴线排不下，如何换行
-- `justify-content` 属性定义了项目在主轴上的对齐方式
-- `align-items` 定义项目在交叉轴上如何对齐
-- `align-content` 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+- `flex` [设置或检索弹性盒模型对象的子元素如何分配空间](../resource/flexible/flex.html)
+- `justify-content` [属性定义了项目在主轴上的对齐方式](../resource/flexible/justify-content.html)
+- `align-items` [定义项目在交叉轴上如何对齐](../resource/flexible/align-items.html)
+- `align-content` [定义了多根轴线的对齐方式。](../resource/flexible/align-content.html)
+
+> 如果项目只有一根轴线，该属性不起作用 <small></small> {:&.pull-right}
+
+- `flex-flow`  [属性决定主轴的方向（即项目的排列方向）](../resource/flexible/flex-flow.html)
 
 # flex元素
-- `align-self` 设置或检索弹性盒模型对象的子元素如何分配空间
+- `align-self` [设置或检索弹性盒模型对象的子元素如何分配空间](../resource/flexible/align-self.html)
 
-[flexbox](https://dmodaii.github.io/2016/06/22/flexbox/)
+
+[dpr-flexible例子](file:///E:/SELF/MoceptWeb/webTool/Postcss/postcss-flexible/dist/index.html)
+
 
 [slide]
-[实际效果1](http://www.dayhr.com/views/perf/app.html#!/message/5000000138691013/5000000138683084/1/0)
 
-[实际效果2](http://www.dayhr.com/views/perf/app.html#!/remind/5000000138690994?data=[2,3,5]&title=aa)
-
-<div class="columns-2">
-    <img class="img_show" src='/img/flexbox1.png'/>
-    <img class="img_show" src='/img/flexbox2.png'/>
-</div>
-
+# 多列布局
+-  `column-width`   [用长度值来定义列宽](../resource/column/column-width.html)
+-  `column-count`    用整数值来定义列数
 
 [slide]
 # Vuex 状态管理
@@ -338,6 +360,11 @@ export default {
   mutations
 }
 ```
+
+[slide]
+
+[vuex实例](http://localhost:3010/#/records)
+
 [slide]
 Progress
 

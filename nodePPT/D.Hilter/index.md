@@ -26,7 +26,7 @@ files: /js/demo.js,/css/demo.css
 # 移动端布局主要问题
 [slide]
 # border 1px
-在dpr为2的屏幕上只需要0.5px即显示为表物理物理像素上的1px, 然而0.5px在某些设备上并不支持
+在dpr为2的屏幕上只需要0.5px即显示为表物理像素上的1px, 然而0.5px在某些设备上并不支持
 
 > 目前设计是给的dpr2的640的设计图的border都是2px
 

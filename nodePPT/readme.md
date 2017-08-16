@@ -1,13 +1,5 @@
-# pdf版
-
-需要安装 phantomJS 。
-
-## 安装phantomjs，如果安装了，请忽略
-npm install -g phantomjs
-## 启动nodeppt server
-nodeppt start
-## 导出文件
-nodeppt pdf http://127.0.0.1:8080/md/demo.md -o a.pdf
+# 安装
+node install -g nodeppt
 
 # html版
 
@@ -21,6 +13,17 @@ nodeppt generate ./ppts/demo.md -a -o output/path
 导出目录下所有ppt，并且生成ppt list首页：
 
 nodeppt path -o output/path -a
+
+# pdf版
+
+需要安装 phantomJS 。
+
+## 安装phantomjs，如果安装了，请忽略
+npm install -g phantomjs
+## 启动nodeppt server
+nodeppt start
+## 导出文件
+nodeppt pdf http://127.0.0.1:8080/md/demo.md -o a.pdf
 
 # 快捷键
 空格/→/↓/Tab/pageDown：下一页

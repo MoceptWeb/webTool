@@ -271,6 +271,7 @@ line-height: .24rem;
 
 # [dpr-flexible例子](/resource/dpr-flexible/index.html)
 
+> flexbox新旧兼容写法很多， 建议使用postcss插件编写兼容性 {:&.pull-right}
 
 [slide]
 

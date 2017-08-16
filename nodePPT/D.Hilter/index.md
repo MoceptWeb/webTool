@@ -28,7 +28,7 @@ files: /js/demo.js,/css/demo.css
 # border 1px
 在dpr为2的屏幕上只需要0.5px即显示为表物理物理像素上的1px, 然而0.5px在某些设备上并不支持
 
-> 目前色合计是给的dpr2的640的设计图的border都是是2px
+> 目前设计是给的dpr2的640的设计图的border都是2px
 
 ```css
 @define-mixin border-1px $color {
@@ -269,7 +269,7 @@ line-height: .24rem;
 - `align-self` [设置或检索弹性盒模型对象的子元素如何分配空间](/resource/flexible/align-self.html)
 
 
-[dpr-flexible例子](file:///E:/SELF/MoceptWeb/webTool/Postcss/postcss-flexible/dist/index.html)
+# [dpr-flexible例子](/resource/dpr-flexible/index.html)
 
 
 [slide]

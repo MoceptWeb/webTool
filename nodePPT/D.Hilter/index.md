@@ -88,10 +88,18 @@ files: /js/demo.js,/css/demo.css
 [slide]
 # 字体大小
 
-- 直接px（但是是写的应该是dpr为1时候的px）
+- 直接px `但是是写的应该是dpr为1时候的px`
 - 将px按照一定比例换算为rem
 
-> 具体两者区别将在下面介绍
+
+[slide]
+# 字体大小的单位取舍
+
+> 具体要看设计，在各种屏幕上想要保持怎样的字体或者某些位置的字体需要特殊显示 （`一般的做法是字体和行高是px， 其他宽高都是rem`）
+
+-  要针对相同dpr、 不同宽度的设备的是要显示同样的字体大小就用px方式
+- 要针对相同dpr、 不同宽度的设备的是不同的字体大小小就用rem方式
+
 
 [slide]
 # dpr配合缩放页面方式解决以上问题
@@ -185,8 +193,10 @@ files: /js/demo.js,/css/demo.css
 # 字体大小问题
 
 - rem
+
 字体大小由根font-size相对大小设置，对于不同宽度的屏幕（当前可以设置超过某一最大宽度后固定最大根font-size，防止字体过大）， 在当前设置的基准rem下， 其余px/100得到正确的rem
 - px
+
 字体大小只和当前dpr有关， 如果全部采用px来写字体大小和行高则需要对应在不同的dpr上做对应转换
 
 ```css
@@ -208,11 +218,34 @@ line-height: .24rem;
 }
 ```
 
-> 具体要看设计，在各种屏幕上想要保持怎样的字体或者某些位置的地体需要特殊显示 
-1、要针对相同dpr、 不同宽度的设备的是要显示同样的字体大小就用px方式
-2、要针对相同dpr、 不同宽度的设备的是不同的字体大小小就用rem方式
+[slide]
+# rem和dpr-flexible
 
+- 其实dpr-flexible就是基于rem上再针对dpr做了页面缩放
+ 
+如果我们只打算写dpr为1的（不页面缩放的）， 我们同样可以使用相同的js和css，只需要去除flexible.js中设置dpr属性的代码和css中[data-dpr="1"]之类的代码即可
 
+- 例如这个css mixin就是无论是否缩放都是适用的
+
+```css
+@define-mixin dpr-img $image, $size: 100% 100%{
+    background-size: $size;
+    background-image: url(../../images/mobile/$(image)@2x.png);
+    @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
+     background-image: url(../../images/mobile/$(image)@3x.png);
+    }
+    [data-dpr="1"] & {
+      background-image: url(../../images/mobile/$(image)@2x.png);
+    }
+    [data-dpr="2"] & {
+      background-image: url(../../images/mobile/$(image)@2x.png);
+    }
+    [data-dpr="3"] & {
+      background-image: url(../../images/mobile/$(image)@3x.png);
+    }
+}
+
+```
 
 [slide]
 # flexbox 弹性盒子
@@ -223,17 +256,17 @@ line-height: .24rem;
 
 [slide]
 # flex 容器
-- `flex` [设置或检索弹性盒模型对象的子元素如何分配空间](../resource/flexible/flex.html)
-- `justify-content` [属性定义了项目在主轴上的对齐方式](../resource/flexible/justify-content.html)
-- `align-items` [定义项目在交叉轴上如何对齐](../resource/flexible/align-items.html)
-- `align-content` [定义了多根轴线的对齐方式。](../resource/flexible/align-content.html)
+- `flex` [设置或检索弹性盒模型对象的子元素如何分配空间](/resource/flexible/flex.html)
+- `justify-content` [属性定义了项目在主轴上的对齐方式](/resource/flexible/justify-content.html)
+- `align-items` [定义项目在交叉轴上如何对齐](/resource/flexible/align-items.html)
+- `align-content` [定义了多根轴线的对齐方式。](/resource/flexible/align-content.html)
 
 > 如果项目只有一根轴线，该属性不起作用 <small></small> {:&.pull-right}
 
-- `flex-flow`  [属性决定主轴的方向（即项目的排列方向）](../resource/flexible/flex-flow.html)
+- `flex-flow`  [属性决定主轴的方向（即项目的排列方向）](/resource/flexible/flex-flow.html)
 
 # flex元素
-- `align-self` [设置或检索弹性盒模型对象的子元素如何分配空间](../resource/flexible/align-self.html)
+- `align-self` [设置或检索弹性盒模型对象的子元素如何分配空间](/resource/flexible/align-self.html)
 
 
 [dpr-flexible例子](file:///E:/SELF/MoceptWeb/webTool/Postcss/postcss-flexible/dist/index.html)
@@ -242,7 +275,7 @@ line-height: .24rem;
 [slide]
 
 # 多列布局
--  `column-width`   [用长度值来定义列宽](../resource/column/column-width.html)
+-  `column-width`   [用长度值来定义列宽](/resource/column/column-width.html)
 -  `column-count`    用整数值来定义列数
 
 [slide]

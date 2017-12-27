@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>clicktree2</title>
+    <style type="text/css">
+
+    .page-top-left-link {
+        padding: 8px 0px;
+        color: #657180;
+        font-size: 16px;
+        font-weight:600;
+    }
+
+    .report_select_tip {
+        background-color: #FFF6EE;
+        height: 30px;
+        color: #F18950;
+        line-height: 30px;
+        font-size: 12px;
+    }
+
+    .my_ivu_icon {
+        display: inline-block;
+        font-family: Ionicons;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        text-rendering: auto;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .table_close_icon {
+        position: absolute;
+        right: 8px;
+        top: 10px;
+    }
+
+    .table_close_icon:hover {
+        cursor: pointer;
+    }
+    .table_report_wrapper {
+            position: absolute;
+            top: 15%;
+            z-index: 101;
+            width: 600px;
+            left: 50%;
+            margin-left: -300px;
+            background: #FFFFFF;
+            border-radius: 6px;
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.20);
+            margin-bottom: 30px;
+    }
+    .main_table_content {
+        margin-top: 40px;
+        max-height: 280px;
+        overflow-y: scroll;
+        padding: 0 16px 16px;
+    }
+
+    .org_nav_link {
+        padding-left: 12px;
+        padding-right: 12px;
+        color: #657180;
+    }
+
+    .org_nav_link:hover {
+        color: #4A5665;
+    }
+
+    .seperate_ver_line {
+        color: #E3E8EE;
+    }
+
+    .btn_padding {
+        margin: 0px 0px 10px 10px;
+    }
+
+    .scale-btn-padding {
+        padding: 10px;
+        background: #fff;
+    }
+
+    .scale-btn-padding:hover {
+        cursor: pointer;
+    }
+
+    .page_btn {
+        height: 30px;
+        padding: 0 11px;
+        display: inline-block;
+        background-color: #fff;
+        border: 1px solid #E3E8EE;
+        border-radius: 2px;
+        color: #657180;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .reset_page_btn {
+        height: 30px;
+        padding: 0 9px;
+        display: inline-block;
+        background-color: #fff;
+        border: transparent;
+        border-radius: 2px;
+        color: #657180;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .reset_btn {
+        position: absolute;
+        margin: 20px;
+        right: 0px;
+        z-index: 23;
+        background: #ffffff;
+    }
+
+    .scale_report_btn {
+        position: absolute;
+        margin: 84px 20px;
+        right: 0px;
+        z-index: 23;
+    }
+
+    .right_filter_selection {
+        float: right;
+        margin-right: 20px;
+    }
+
+    /* // 节点 */
+    .reportnode .report-node-rect {
+        cursor: pointer;
+        fill: #fff;
+    }
+
+    .reportnode text {
+        font: 14px PingFangSC-Regular;
+    }
+
+    .reportnode .boldtext {
+        font: 16px PingFangSC-Regular;
+    }
+
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+    }
+
+    .collapse-icon {
+        cursor: pointer;
+    }
+
+    .collapse-icon:hover {
+        opacity: .7;
+    }
+
+    .collapse-icon-rotate {
+        transform: rotate(180deg);
+        transform-origin: center;
+    }
+
+    #downloadSvg {
+        display: none;
+    }
+
+    .hoverbgtip {
+        cursor: pointer;
+    }
+
+    .showicona {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+
+    .editIcon_normal {
+        display: none;
+        cursor: pointer;
+    }
+    .hoverText_tip{
+        display: none;
+        cursor: pointer;
+    }
+    </style>
+        <script src="../../d3.js"></script>
+        <script src="../../../common/js/jquery-1.8.1.js"></script>
+
+</head>
+<body>
+        <div id="Main" style="width:100%;height:800px;border:1px solid #E3E8EE;background-color:#F5F7F9;">
+
+            </div>
+
+<script>
+    var headImgColors =  ["#07a9ea", "#82c188", "#ab97c2", "#ffb500", "#59ccce", "#ff5959"] //蓝，绿，紫，黄，浅蓝,浅红
+
+reportChart()
+function reportChart() {
+        var _this = this;
+        var margin = {
+            top: 20,
+            right: 120,
+            bottom: 20,
+            left: 120
+        },
+            // 画布的大小
+            d3Area = document.getElementById('Main'),
+            width = d3Area.offsetWidth - 20,
+            height = d3Area.offsetHeight;
+
+        var root = {
+            "id": "30",
+            "name": "Lisa的",
+            "tip": null,
+            "parentId": null,
+            "chkDisabled": false,
+            "open": true,
+            "children": [{
+                "id": "31",
+                "name": "aiwe",
+                "tip": null,
+                "parentId": "30",
+                "chkDisabled": false,
+                "open": false,
+                "children": [{
+                    "id": "78",
+                    "name": "荣耀",
+                    "tip": null,
+                    "parentId": "31",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": [{
+                        "id": "71",
+                        "name": "红米",
+                        "tip": null,
+                        "parentId": "78",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": null,
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": null,
+                        "staffCount": null,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": false,
+                        "noHavChildList": [{
+                            "id": "71",
+                            "name": "红米",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "72",
+                            "name": "红米3",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "73",
+                            "name": "小米",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "74",
+                            "name": "小米4",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "75",
+                            "name": "魅族",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "76",
+                            "name": "摩托罗拉",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "77",
+                            "name": "华为",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "79",
+                            "name": "中兴",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "80",
+                            "name": "索尼",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "81",
+                            "name": "乐视",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "82",
+                            "name": "努比亚",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "83",
+                            "name": "LG",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "84",
+                            "name": "爱疯",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "85",
+                            "name": "三星",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "86",
+                            "name": "大哥大",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "89",
+                            "name": "BB机",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "90",
+                            "name": "格力",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "91",
+                            "name": "美颜手机",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "92",
+                            "name": "联想",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "93",
+                            "name": "小米6",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }, {
+                            "id": "102",
+                            "name": "小米5小米小",
+                            "tip": null,
+                            "parentId": "78",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": "手机品牌部",
+                            "leaderPosName": null,
+                            "leaderName": null,
+                            "registerCount": null,
+                            "staffCount": null,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }],
+                        "headImg": null
+                    }],
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": "手机品牌部",
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": null,
+                    "staffCount": null,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": "group1/M00/01/0D/wKgBD1lJ11yAXy0PAACt6MSLcIs374.png"
+                }],
+                "condition": null,
+                "isRefreshTableStyle": false,
+                "orgId": null,
+                "orgName": "荣耀集团",
+                "leaderPosName": null,
+                "leaderName": null,
+                "registerCount": null,
+                "staffCount": null,
+                "lackCount": null,
+                "personId": null,
+                "personName": null,
+                "empCode": null,
+                "reportPersonId": null,
+                "reportIdQueue": null,
+                "posName": null,
+                "isHavChild": true,
+                "noHavChildList": null,
+                "headImg": "group1/M00/00/3E/wKgBD1kMK2iAIJhfAACnTDQI9Ns109.png"
+            }, {
+                "id": "32",
+                "name": "yiwa",
+                "tip": null,
+                "parentId": "30",
+                "chkDisabled": false,
+                "open": false,
+                "children": [{
+                    "id": "35",
+                    "name": "aerfa",
+                    "tip": null,
+                    "parentId": "32",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": null,
+                    "staffCount": null,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": false,
+                    "noHavChildList": [{
+                        "id": "35",
+                        "name": "aerfa",
+                        "tip": null,
+                        "parentId": "32",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": "荣耀集团",
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": null,
+                        "staffCount": null,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": "group1/M00/00/3E/wKgBD1kMK7uAGBtjAACxBryX0uc937.png"
+                    }, {
+                        "id": "34",
+                        "name": "fly",
+                        "tip": null,
+                        "parentId": "32",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": "手机品牌部",
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": null,
+                        "staffCount": null,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": "group1/M00/00/3E/wKgBEFkMK8eASubpAAB8hyF7UFM870.png"
+                    }],
+                    "headImg": "group1/M00/00/3E/wKgBD1kMK7uAGBtjAACxBryX0uc937.png"
+                }],
+                "condition": null,
+                "isRefreshTableStyle": false,
+                "orgId": null,
+                "orgName": "荣耀集团",
+                "leaderPosName": null,
+                "leaderName": null,
+                "registerCount": null,
+                "staffCount": null,
+                "lackCount": null,
+                "personId": null,
+                "personName": null,
+                "empCode": null,
+                "reportPersonId": null,
+                "reportIdQueue": null,
+                "posName": null,
+                "isHavChild": true,
+                "noHavChildList": null,
+                "headImg": "group1/M00/00/3E/wKgBEFkMK4OAXrENAACI5GmGpcM070.png"
+            }],
+            "condition": null,
+            "isRefreshTableStyle": false,
+            "orgId": null,
+            "orgName": "荣耀集团",
+            "leaderPosName": null,
+            "leaderName": null,
+            "registerCount": null,
+            "staffCount": null,
+            "lackCount": null,
+            "personId": null,
+            "personName": null,
+            "empCode": null,
+            "reportPersonId": null,
+            "reportIdQueue": null,
+            "posName": null,
+            "isHavChild": true,
+            "noHavChildList": null,
+            "headImg": null
+        };
+        var i = 0,
+            duration = 650,
+            rectW = 270,
+            rectH = 130;
+
+        var tree = d3.layout.tree().nodeSize([rectW + 20, rectH]);
+        var diagonal = d3.svg.diagonal()
+            .projection(function(d) {
+                return [d.x + rectW / 2, d.y + rectH / 2];
+            });
+        var zm = d3.behavior.zoom().scale([0.8]).scaleExtent([0.3, 3]).on("zoom", redraw);
+        _this.zoomListener = zm;
+        var svg = d3.select("#Main").append("svg").attr("id", "mainReportChart").attr("width", width).attr("height", height)
+            .call(zm).append("g")
+            .attr("transform", "translate(" + (width / 2 - rectW / 2) + "," + 30 + ")" + " scale(" + 0.8 + ")").attr("id", "chartReportContainer");
+
+        //necessary so that zoom knows where to zoom and unzoom from
+        zm.translate([(width / 2 - rectW / 2), 20]);
+
+        root.x0 = 0;
+        root.y0 = height / 2;
+
+        function collapse(d) {
+            if (d.children) {
+                d._children = d.children;
+                if (d._children) {
+                    d._children.forEach(collapse);
+
+                }
+                //默认全部展开
+                // d.children = null;
+            }
+        }
+        if (root.children) {
+            root.children.forEach(collapse);
+        }
+        update(root);
+
+        //d3.select("#Main").style("height", "800px");
+
+        function update(source) {
+
+            tree.separation(function(a, b) {
+                return 1;
+            })
+            // Compute the new tree layout.
+            var nodes = tree.nodes(root).reverse(),
+                links = tree.links(nodes);
+
+            // Normalize for fixed-depth.
+            nodes.forEach(function(d) {
+                //----------------------------------------------------
+                d.y = d.depth * 180;
+            });
+
+            // Update the nodes…
+            var node = svg.selectAll("g.reportnode")
+                .data(nodes, function(d) {
+                    return d.id || (d.id = ++i);
+                });
+
+            // Enter any new nodes at the parent's previous position.
+            var nodeEnter = node.enter().append("g")
+                .attr("class", function(d) {
+                    var reportNode = "reportNode_" + d.id;
+
+                    return "reportnode " + reportNode;
+                })
+                .attr("transform", function(d) {
+                    return "translate(" + source.x0 + "," + source.y0 + ")";
+                })
+                .on("click", click)
+                .on("mouseover", function(d) {
+                    if ((d.noHavChildList==null || d.noHavChildList.length==1) && d.children!=null) {
+                        // 没有统计节点
+                        // handleMouseOver(d)
+                        $(".eidticon_" + d.id).css("display", "inline-block");
+                    }
+                    // 有统计节点 则不处理
+                }).on("mouseout", function(d) {
+                    //hideEditIcon(d);
+                    $(".eidticon_" + d.id).css("display", "none");
+
+                    $(".hoverText_tip").css("display","none");
+                });
+
+            
+            /*创建阴影*/
+            var defs = nodeEnter.append("defs");
+            var filter = defs.append("filter").attr("id", 'rectDef').attr('height', '120%');
+            filter.append('feColorMatrix')
+                .attr('result', 'matrixOut')
+                .attr('in', 'offOut')
+                .attr('type', 'matrix')
+                .attr('values', '0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0 0 0 0.1 0.1 0')
+            filter.append('feGaussianBlur')
+                .attr('result', 'blurOut')
+                .attr('in', 'matrixOut')
+                .attr('stdDeviation', 3)
+            filter.append('feBlend')
+                .attr('in', 'SourceGraphic')
+                .attr('in2', 'blurOut')
+                .attr('mode', 'normal')
+            nodeEnter.append("rect")
+                .attr('class', 'node-rect')
+                .attr("width", rectW)
+                .attr("height", rectH)
+                .attr('rx', 5)
+                .attr('ry', 5)
+                .style("fill", '#fff')
+                .attr('filter', 'url(#rectDef)');
+
+            // 组织基础框架
+            nodeEnter.append("rect")
+                .attr("class", "report-node-rect")
+                .attr("rx", 6)
+                .attr("ry", 6)
+                .attr("width", rectW)
+                .attr("height", rectH);
+            // 有头像的
+            // 是否有平级节点-------------------绘制
+            nodeEnter.append('rect')
+                .attr("class", "isHavChild")
+                .style('fill', function(d) {
+                    var reportNode = svg.select(".reportNode_" + d.id);
+                    // if(){
+
+                    // }else{
+
+                    // }
+                    //  d.noHavChildList==null || d.noHavChildList.length==1
+                    if (d.noHavChildList==null || d.noHavChildList.length==1) {
+                        // 没有同级节点
+                        // 编辑按钮长存------------------------------------------------------------------
+                        if (navigator.userAgent.indexOf("Firefox") > -1) {
+                            // 火狐浏览器的处理
+                            reportNode.append("image")
+                                .attr("class", function(d) {
+                                    return "editIcon_normal eidticon_" + d.id;
+                                })
+                                .attr("x", "240")
+                                .attr("y", "4")
+                                .attr("width", 28)
+                                .attr("height", 28)
+                                .attr("xlink:href", '../../images/editicon.png');
+                            $(".eidticon_" + d.id).click(function(e) {
+                                e.stopPropagation();
+                                alert('编辑')
+                                // _this.showEditReporter(d);
+                                console.log("click click click");
+                            });
+                        } else {
+                            reportNode.append("image")
+                                .attr("class", function(d) {
+                                    return "editIcon_normal eidticon_" + d.id;
+                                })
+                                .attr("x", "240")
+                                .attr("y", "4")
+                                .attr("width", 28)
+                                .attr("height", 28)
+                                .attr("xlink:href", '../../images/editicon.png')
+                                .on("click", function(d) {
+                                    // event.stopPropagation();
+                                    _this.showEditReporter(d);
+                                    event.stopPropagation();
+                                });
+                        }
+
+                        console.log(svg.select(".reportNode_" + d.id));
+                        noSameLevel(reportNode);
+                    } else {
+                        // 有同级节点，还要计算节点个数：2，3，多
+                        var showType = d.noHavChildList.length;
+                        havSameLevel(reportNode, showType);
+                    }
+                    return 'transparent';
+                })
+            // 没有平级节点
+            function noSameLevel(reportNode) {
+                reportNode.append('rect')
+                    .attr("class", "isHavHeadImg")
+                    .style("fill", function(d) {
+                        // 存在头像
+
+                        if (d.headImg) {
+                            havHeadImg(reportNode, false,d);
+                        } else {
+                            // 不存在头像
+                            noHeadImg(reportNode, false);
+                        }
+                        rightSideText(reportNode);
+                    })
+            }
+            // 有平级节点
+            function havSameLevel(reportNode, type) {
+                if (type == 2) {
+                    // 两个人的情况，取noHavChildList[1]
+                    paintTwoImgNode(reportNode);
+                } else if (type == 3) {
+                    // 三个人的情况 取noHavChildList[1] noHavChildList[2]
+                    paintThreeImgNode(reportNode);
+                } else if (type > 3) {
+                    // 右侧图片
+                    reportNode.append("image")
+                        .attr("x", 80)
+                        .attr("y", 20)
+                        .attr("width", 120)
+                        .attr("height", 80)
+                        .attr("xlink:href", '../../images/virtualImage.png')
+                        .on('mouseover', function(d) {
+                            handleReportNodeMouseOver(d, reportNode)
+                        })
+                        .on("mouseout", function(d) {
+                            handleReportNodeMouseOut(d, reportNode);
+                        })
+                        .on("click", function(d) {
+                            // 点击显示人员列表
+                            reportNode.selectAll(".hoverbgcircle").remove();
+                            reportNode.selectAll(".hoverbgtip").remove();
+                            isShowPersonTable(d);
+                            console.log(d, "click img");
+                        });
+                    //提示有多少同级节点
+                    reportNode.append("text")
+                        .attr("x", 135)
+                        .attr("y", 114)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#657180")
+                        .style("font", "16px PingFangSC-Medium")
+                        .text(function(d) {
+                            return "共" + d.noHavChildList.length + "人";
+                        });
+                } else if (type == 1) {
+                    // 只有一个数据
+                    noSameLevel(reportNode);
+                }
+            }
+
+            // 显示人员列表表格
+            function isShowPersonTable(resourceD) {
+                _this.tableDatas = [];
+                _this.isShowTable = true;
+                _this.tableAlignLeft = 100;
+                _this.tableAlignTop = resourceD.y + rectH * 2 + 30;
+                _this.tableDatas = resourceD.noHavChildList;
+            }
+            // 处理鼠标移入事件显示‘查看’
+            function handleReportNodeMouseOver(overd, reportNode) {
+                reportNode.append("text")
+                    .attr("class", "hoverbgtip")
+                    .attr("x", 174)
+                    .attr("y", 64)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#fff")
+                    .text(function(d) {
+                        return "查看";
+                    })
+                    .on('click', function(d) {
+                        debugger
+                        alert('查看')
+                        // isShowPersonTable(d);
+                        // reportNode.select(".hovertip_" + overd.id).remove();
+                        // reportNode.selectAll(".hoverbgtip").remove();
+                        console.log(d);
+                        // isShowPersonTable(d);
+                    })
+                    .on("mouseout", function(d) {
+                        svg.selectAll(".hoverbgtip").remove();// 隐藏查看
+                    });
+            }
+            // 处理鼠标移出事件‘查看’消失
+            function handleReportNodeMouseOut(d, reportNode) {
+                setTimeout(function() {
+                    // reportNode.selectAll(".hoverbgtip").remove();
+                }, 450);
+            }
+            // 不存在头像
+            function noHeadImg(reportNode, isHasName) {
+                // 没有头像的时候,圆圈
+                reportNode.append("circle")
+                    .attr("cx", 60)
+                    .attr("cy", 60)
+                    .attr("r", 28)
+                    .attr("fill", function(d) {
+                        return headImgColors[getRandomIntInclusive(0, 5)]
+                    });
+                // 没有头像时的 名字
+                reportNode.append("text")
+                    .attr("x", 60)
+                    .attr("y", 64)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#fff")
+                    .text(function(d) {
+
+                        var personName = d.name;
+                        var nameLength = d.name.length;
+                        if (nameLength > 3) {
+                            personName = d.name.substring(nameLength - 2, nameLength);
+                        }
+                        return personName;
+                    });
+                // 需要有名字
+                if (isHasName) {
+                    reportNode.append("text")
+                        .attr("x", 60)
+                        .attr("y", 114)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#657180")
+                        .text(function(d) {
+                            var pname = d.name;
+                            if (pname.length >= 4) {
+                                pname = pname.substring(0, 4) + "...";
+                            }
+                            return pname;
+                        });
+                }
+            }
+            // 右侧 名称
+            function rightSideText(reportNode) {
+                // 名称
+                reportNode.append("text")
+                    .attr("x", 110)
+                    .attr("y", 44)
+                    .attr("text-anchor", "left")
+                    .attr("fill", "#657180")
+                    .attr("class", "boldtext")
+                    .text(function(d) {
+                        var personName = d.name;
+                        if (personName.length > 8) {
+                            personName = personName.substring(0, 8)+"...";
+                        }
+                        return personName;
+                    });
+                    // 职位
+                reportNode.append("text")
+                    .attr("x", 110)
+                    .attr("y", 96)
+                    .attr("text-anchor", "left")
+                    .attr("fill", "#657180")
+                    .text(function(d) {
+                        var reportPosName = '';
+                        if (d.posName && d.posName != '') {
+                            reportPosName = d.posName;
+                            if (reportPosName.length > 8) {
+                                reportPosName = reportPosName.substring(0, 8)+"...";
+                            }
+                        } else {
+                            if (d.noHavChildList && d.noHavChildList.length > 0 && d.noHavChildList[0].id == d.id && d.noHavChildList[0].posName && d.noHavChildList[0].posName != '') {
+                                reportPosName = d.noHavChildList[0].posName;
+                                if (reportPosName.length > 8) {
+                                    reportPosName = reportPosName.substring(0, 8)+"...";
+                                }
+                            }
+                        }
+                        return reportPosName;
+                    });
+                    //组织
+                reportNode.append("text")
+                    .attr("x", 110)
+                    .attr("y", 70)
+                    .attr("text-anchor", "left")
+                    .attr("fill", "#657180")
+                    .text(function(d) {
+                        var reportOrgName = '';
+                        if (d.orgName && d.orgName != '') {
+                            reportOrgName = d.orgName;
+                            if (reportOrgName.length > 8) {
+                                reportOrgName = reportOrgName.substring(0, 8)+"...";
+                            }
+                        } else {
+                            if (d.noHavChildList && d.noHavChildList.length > 0 && d.noHavChildList[0].id == d.id && d.noHavChildList[0].orgName && d.noHavChildList[0].orgName != '') {
+                                reportOrgName = d.noHavChildList[0].orgName;
+                                if (reportOrgName.length > 8) {
+                                    reportOrgName = reportOrgName.substring(0, 8)+"...";
+                                }
+                            }
+                        }
+                        return reportOrgName;
+                    });
+            }
+            // 存在头像
+            function havHeadImg(reportNode, isHasName,content) {
+                // 圆图片处理
+                reportNode.append("defs")
+                    .attr("class", "headimg-defs")
+                    .attr("id","headimg-defs-"+content.id);
+
+                reportNode.select("#headimg-defs-"+content.id).append("pattern")
+                    .attr("id", "circleImg"+content.id)
+                    .attr("patternUnits", "userSpaceOnUse")
+                    .attr('x',30)
+                    .attr("y",30)
+                    .attr("width", 60)
+                    .attr("height", 60);
+                reportNode.select(".headimg-defs #circleImg"+content.id).append("image")
+                    .attr("class", "report-node-img")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("width", 60)
+                    .attr("height", 60)
+                    .attr("xlink:href", function(d) {
+                        return _this.filePrefix + "/" + d.headImg;
+                    });
+                reportNode.append("circle")
+                    .attr("cx", 60)
+                    .attr("cy", 60)
+                    .attr("r", 30)
+                    .attr("fill", function(d) {
+                        return "url(#circleImg"+content.id+")";
+                    });
+                // 需要有名字
+                if (isHasName) {
+                    reportNode.append("text")
+                        .attr("x", 60)
+                        .attr("y", 114)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#657180")
+                        .text(function(d) {
+                            return d.name;
+                        });
+                }
+            }
+            // 绘制两个头像的
+            function paintTwoImgNode(reportNode) {
+                reportNode.append('rect')
+                    .attr("class", 'isHavHeadImg')
+                    .style("fill", function(d) {
+                        var node1 = d.noHavChildList[0]; // 第一个节点
+                        var node2 = d.noHavChildList[1]; // 第一个节点
+                        var nodePosition1 = {
+                            normalcy: 60,
+                            normalcx: 95,
+                            normalty: 64,
+                            normaltx: 95,
+                            normaldty: 114,
+                            normaldtx: 95,
+                            imgx: 30,
+                            imgy: 0
+                        }
+                        var nodePosition2 = {
+                            normalcy: 60,
+                            normalcx: 175,
+                            normalty: 64,
+                            normaltx: 175,
+                            normaldty: 114,
+                            normaldtx: 175,
+                            imgx: 30,
+                            imgy: 0
+                        }
+                        if (node1.headImg && node1.headImg != '') {
+                            paintHaveImgByPos(reportNode, true, nodePosition1, node1,2,1);
+                        } else {
+                            paintNoHavImgByPos(reportNode, true, nodePosition1, node1);
+
+                        }
+                        if (node2.headImg && node2.headImg != '') {
+                            paintHaveImgByPos(reportNode, true, nodePosition2, node2,2,2);
+
+                        } else {
+                            paintNoHavImgByPos(reportNode, true, nodePosition2, node2);
+
+                        }
+                    });
+            }
+            // 绘制三个头像的
+            function paintThreeImgNode(reportNode) {
+
+                reportNode.append('rect')
+                    .attr("class", "isHavHeadImg")
+                    .style("fill", function(d) {
+                        // 存在头像
+
+                        // if (d.headImg) {
+                        //     havHeadImg(reportNode, true);
+                        // } else {
+                        //     // 不存在头像
+                        //     noHeadImg(reportNode, true);
+                        // }
+
+                        console.log(d);
+                        var node1 = d.noHavChildList[0];
+                        var node2 = d.noHavChildList[1];// 第二个节点
+                        var node3 = d.noHavChildList[2]; // 第三个节点
+                        var nodePosition1={
+                            normalcy: 60,
+                            normalcx: 60,
+                            normalty: 64,
+                            normaltx: 60,
+                            normaldty: 114,
+                            normaldtx: 60,
+                            imgx: 0,
+                            imgy: 0
+                        }
+                        // 第二个节点的位置
+                        var nodePosition2 = {
+                            normalcy: 60,
+                            normalcx: 132,
+                            normalty: 64,
+                            normaltx: 132,
+                            normaldty: 114,
+                            normaldtx: 132,
+                            imgx: 30,
+                            imgy: 0
+                        };
+                        // 第三个节点的位置
+                        var nodePosition3 = {
+                            normalcy: 60,
+                            normalcx: 205,
+                            normalty: 64,
+                            normaltx: 205,
+                            normaldty: 114,
+                            normaldtx: 205,
+                            imgx: 60,
+                            imgy: 0
+                        };
+                        if (node1.headImg && node1.headImg != '') {
+
+                            paintHaveImgByPos(reportNode, true, nodePosition1, node1,3,1);
+                        } else {
+                            paintNoHavImgByPos(reportNode, true, nodePosition1, node1);
+                        }
+                        if (node2.headImg && node2.headImg != '') {
+
+                            paintHaveImgByPos(reportNode, true, nodePosition2, node2,3,2);
+                        } else {
+                            paintNoHavImgByPos(reportNode, true, nodePosition2, node2);
+                        }
+                        if (node3.headImg && node3.headImg != '') {
+                            paintHaveImgByPos(reportNode, true, nodePosition3, node3,3,3);
+                        } else {
+                            paintNoHavImgByPos(reportNode, true, nodePosition3, node3);
+                        }
+                        return "transparent"
+                    });
+            }
+            // 根据节点为指绘制有头像的图形
+            /**
+             content:绘制节点的基本信息
+                position:该节点的位置
+                isHasName:是否需要名字
+                reportNode:该节点
+            */
+            function paintHaveImgByPos(reportNode, isHasName, position, content,levelNo,nodeIndex) {
+                // 圆图片处理
+                reportNode.append("defs")
+                    .attr("class", "headimg-defs")
+                    .attr("id","headimg-defs-"+content.id);
+                // 两个头像：1、 5,30 || 2、 25,30
+                // 三个头像：1、28,30 || 42,30 || 54,30
+                reportNode.select("#headimg-defs-"+content.id).append("pattern")
+                    .attr("id", "circleImg"+content.id)
+                    .attr("patternUnits", "userSpaceOnUse")
+                    .attr("width", 60)
+                    .attr("height", 60);
+                    if(levelNo==2){
+                        // 两个头像的
+                        if(nodeIndex==1){
+                            reportNode.select("#circleImg"+content.id)
+                                .attr("x", 5)
+                                .attr("y", 30);
+                        }else if(nodeIndex==2){
+                            reportNode.select("#circleImg"+content.id)
+                                .attr("x", 25)
+                                .attr("y", 30);
+                        }
+                    }else if(levelNo==3){
+                        // 三个头像的
+                            if(nodeIndex==1){
+                            reportNode.select("#circleImg"+content.id)
+                                .attr("x", 28)
+                                .attr("y", 30);
+                        }else if(nodeIndex==2){
+                            reportNode.select("#circleImg"+content.id)
+                                .attr("x", 42)
+                                .attr("y", 30);
+                        }else if(nodeIndex==3){
+                            reportNode.select("#circleImg"+content.id)
+                                .attr("x", 54)
+                                .attr("y", 30);
+                        }
+                    }
+                reportNode.select(".headimg-defs "+"#circleImg"+content.id).append("image")
+                    .attr("class", "report-node-img")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("width", 60)
+                    .attr("height", 60)
+                    .attr("xlink:href", function(d) {
+                        return _this.filePrefix + "/" + content.headImg;
+                    });
+                reportNode.append("circle")
+                    .attr("cx", position.normalcx)
+                    .attr("cy", position.normalcy)
+                    .attr("r", 30)
+                    .on("mouseover", function(d) {
+                        $(".hovertip_"+content.id).css("display","inline-block");
+                        $(".hovertext_"+content.id).css("display",'inline-block');
+                    })
+                    .attr("fill", function(d) {
+                        return "url(#circleImg"+content.id+")";
+                    });
+                // 需要有名字
+                if (isHasName) {
+                    reportNode.append("text")
+                        .attr("x", position.normaldtx)
+                        .attr("y", position.normaldty)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#657180")
+                        .text(function(d) {
+                            var pname = content.name;
+                            if (pname.length >= 4) {
+                                pname = pname.substring(0, 4) + "...";
+                            }
+                            return pname;
+                        });
+                }
+                    // 固定提示显示
+                var hoverPosition = {
+                    tx: position.normaltx,
+                    ty: position.normalty,
+                    hcx: position.normalcx,
+                    hcy: position.normalcy
+                }
+                paintHoverTipBtPos(reportNode, hoverPosition, content.id);
+            }
+            function paintNoHavImgByPos(reportNode, isHasName, position, content) {
+
+                // 没有头像的时候,圆圈
+                reportNode.append("circle")
+                    .attr("cx", position.normalcx) // cx
+                    .attr("cy", position.normalcy) // cy
+                    .attr("class",function(d){
+                        return "specialHover_"+content.id
+                    })
+                    .attr("r", 28)
+                    .attr("fill", function(d) {
+                        return headImgColors[getRandomIntInclusive(0, 5)]
+                    })
+                    .on("mouseover", function(d) {
+                        $(".hovertip_"+content.id).css("display","inline-block");
+                        $(".hovertext_"+content.id).css("display",'inline-block');
+                    })
+                    .on("mouseout", function(d) {
+                    
+                        // $(".hovertip_"+content.id).css("display","none");
+                        // $(".hovertext_"+content.id).css("display",'none')
+                    });
+                    // $(".specialHover_"+content.id).on("mouseout",function(){
+                    //     setTimeout(function(){
+                    //         $(".hovertip_"+content.id).css("display","none");
+                    //         $(".hovertext_"+content.id).css("display",'none');
+                    //     },700);
+
+                    // });
+
+                // 没有头像时的 名字
+                reportNode.append("text")
+                    .attr("x", position.normaltx) //tx
+                    .attr("y", position.normalty) //ty
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#fff")
+                    .text(function(d) {
+                        // 使用content的名字
+                        var personName = content.name;
+                        var nameLength = personName.length;
+                        if (nameLength > 3) {
+                            personName = personName.substring(nameLength - 2, nameLength);
+                        }
+                        return personName;
+                    });
+                // 需要有名字
+                if (isHasName) {
+                    reportNode.append("text")
+                        .attr("x", position.normaldtx) // dtx 下方的x和y
+                        .attr("y", position.normaldty) //dty
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "#657180")
+                        .text(function(d) {
+                            var pname = content.name;
+                            if (pname.length >= 4) {
+                                pname = pname.substring(0, 4) + "...";
+                            }
+                            return pname;
+                        });
+                }
+
+                    // 固定提示显示
+                var hoverPosition = {
+                    tx: position.normaltx,
+                    ty: position.normalty,
+                    hcx: position.normalcx,
+                    hcy: position.normalcy
+                }
+                paintHoverTipBtPos(reportNode, hoverPosition, content.id);
+            }
+            function paintHoverTipBtPos(reportNode, position, hid) {
+                reportNode.append("circle")
+                    .style({ 'fill': '#000', 'opacity': '0.45' })
+                    .attr('class', function(d){
+                        return "hoverText_tip hovertip_"+hid
+                    })
+                    .attr('cx', position.hcx)
+                    .attr('cy', position.hcy)
+                    .attr('r', '28')
+                    .on("mouseover",function(d){
+                        $(".hovertip_"+hid).css("display","inline-block");
+                        $(".hovertext_"+hid).css("display",'inline-block');
+                    })
+                // if ($(".hovertip_" + hid).length == 0) {
+
+                // }
+
+                reportNode.append("text")
+                    .attr("class", function(d){
+                        return "hoverText_tip hovertext_"+hid
+                    })
+                    .attr("x", position.tx)
+                    .attr("y", position.ty)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#fff")
+                    .text(function(d) {
+                        return "查看";
+                    })
+                    .on('click', function(d) {
+                        isShowPersonTable(d);
+                        // reportNode.select(".hovertip_" + hid).remove();
+                        //circle 隐藏
+
+                        $(".hovertip_"+hid).css("display","none");
+                        // text 隐藏
+                        // reportNode.selectAll(".hoverbgtip").remove();
+
+                        $(".hovertext_"+hid).css("display",'none')
+                        // isShowPersonTable(d);
+                    })
+                    .on("mouseover",function(d){
+                        $(".hovertip_"+hid).css("display","inline-block");
+                        $(".hovertext_"+hid).css("display",'inline-block');
+                    })
+                    // .on("mouseout", function(d) {
+                    //     $(".hovertip_"+d.id).css("display","none");
+                    //     svg.selectAll(".hoverbgtip").remove();// 隐藏查看
+                    //     // svg.selectAll(".myhoverbgtip").remove();
+                    //     $(".hovertext_"+d.id).css("display",'none')
+
+                    //     // text 隐藏
+                    //     reportNode.selectAll(".hoverbgtip").remove();
+                    // });
+            }
+            // Transition nodes to their new position.
+            var nodeUpdate = node.transition()
+                .duration(duration)
+                .attr("transform", function(d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            nodeUpdate.select("rect")
+                .attr("font-size", 24)
+                .attr("width", rectW)
+                .attr("height", rectH);
+
+            nodeUpdate.select("text")
+                .style("fill-opacity", 1)
+
+            // Transition exiting nodes to the parent's new position.
+            var nodeExit = node.exit().transition()
+                .duration(duration)
+                .attr("transform", function(d) {
+                    return "translate(" + source.x + "," + source.y + ")";
+                })
+                .remove();
+
+            nodeExit.select("rect")
+                .attr("width", rectW)
+                .attr("height", rectH)
+                .style("fill", "#fff");
+
+            nodeExit.select("text");
+
+            // 连线
+            var link = svg.selectAll("path.link")
+                .data(links, function(d) {
+                    return d.target.id;
+                });
+
+            link.enter().insert("path", "g")
+                .data(links)
+                .attr("class", "link")
+                .attr("x", rectW)
+                .attr("y", rectH / 2)
+                .attr("d", connect)
+                .style('opacity', 0)
+                .style('stroke', function(d, i) {
+                    return '#D1D8E0'
+                })
+                .style('stroke-width', 1.2)
+                .style('fill', 'none')
+
+            link.transition()
+                .duration(duration)
+                .attr("d", connect)
+                .style('opacity', 1)
+
+            link.exit().transition()
+                .duration(duration)
+                .style('opacity', 0)
+                .remove();
+
+            function connect(d, i) {
+                return "M" + (d.source.x + rectW / 2) + "," + (d.source.y + rectH)
+                    + "V" + (d.source.y + 160)
+                    + "H" + (d.target.x + rectW / 2)
+                    + "V" + (d.target.y);
+            };
+
+            // 上下图标
+            d3.selectAll('.collapse-icon').remove();
+            node.append('image').attr('x', rectW / 2 - 18).attr('y', 126).attr("width", 36).attr("height", 24)
+                .filter((d) => {
+                    return (d.children && d.children.length) || (d._children && d._children.length)
+                })
+                .attr("xlink:href", '../../images/down.png')
+                .attr('class', function(d) {
+                    return d.children ? 'collapse-icon' : 'collapse-icon collapse-icon-rotate'
+                })
+                .on("click", _this.handleCollapseClick)
+            // Stash the old positions for transition.
+            nodes.forEach(function(d) {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+        }
+
+
+
+        function handleCollapseClick(d) {
+            event.stopPropagation();
+            // var index = _this.openIds.indexOf(d.id);
+            // if (index > -1) {
+            //     _this.openIds.splice(index, 1);
+            // }
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+                d3.select(d3.event.target).attr('class', 'collapse-icon collapse-icon-rotate');
+                _this.updateTree(d);
+                //this.centerNode(d.parent || d);
+            } else {
+                d.children = d._children;
+                d._children = null;
+                d3.select(d3.event.target).attr('class', 'collapse-icon');
+                // _this.openIds.push(d.id);
+                _this.updateTree(d);
+
+                //this.centerNode(d);
+            }
+        }
+        // Toggle children on click.
+        function click(d) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else {
+                d.children = d._children;
+                d._children = null;
+            }
+            update(d);
+        }
+
+        //Redraw for zoom
+        function redraw() {
+            //console.log("here", d3.event.translate, d3.event.scale);
+            var rescale = d3.event.scale;
+            if (_this.nowScale) {
+                rescale = _this.nowScale;
+            }
+            svg.attr("transform",
+                "translate(" + d3.event.translate + ")"
+                + " scale(" + d3.event.scale + ")");
+        }
+        // 随机获取数字
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+        }
+    }
+</script>
+</body>
+</html>

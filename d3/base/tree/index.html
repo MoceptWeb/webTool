@@ -45,7 +45,7 @@
       //定义D3树布局范围  
       var tree = d3.layout.tree()
         .size([treeHeight, treeWidth - 100])//注意D3布局跟svg坐标系无关,size(高，宽)  
-        .separation(function (a, b) { return (a.parent == b.parent ? 1 : 2); });//设置相隔节点的间距，a、b节点相隔  
+        .separation(function (a, b) { return (a.parent == b.parent ? 2 : 2); });//设置相隔节点的间距，a、b节点相隔  
 
       //定义连线生成器  
       var diagonal = d3.svg.diagonal()

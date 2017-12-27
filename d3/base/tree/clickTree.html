@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>click-tree</title>
+
+    <style type="text/css">
+        .page-top-left-link {
+            padding: 8px 0px;
+            color: #657180;
+            font-size: 16px;
+            font-weight:600;
+        }
+        
+        .org_nav_link {
+            padding-left: 12px;
+            padding-right: 12px;
+            color: #657180;
+        }
+        
+        .org_nav_link:hover {
+            color: #4A5665;
+        }
+        
+        .seperate_ver_line {
+            color: #E3E8EE;
+        }
+        
+        .btn_padding {
+            margin: 0px 0px 10px 10px;
+        }
+        
+        .btn-padding {
+            background: #fff;
+            padding: 10px;
+        }
+        
+        .btn-padding:hover {
+            cursor: pointer;
+        }
+        
+        .page_btn {
+            height: 30px;
+            padding: 0 11px;
+            display: inline-block;
+            background-color: #fff;
+            border: 1px solid #E3E8EE;
+            border-radius: 2px;
+            color: #657180;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .reset_page_btn {
+            height: 30px;
+            padding: 0 9px;
+            display: inline-block;
+            background-color: #fff;
+            border: transparent;
+            border-radius: 2px;
+            color: #657180;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .reset_btn {
+            position: absolute;
+            margin: 20px;
+            right: 0px;
+            z-index: 23;
+            background: #ffffff;
+        }
+        
+        .org_select_tip {
+            background-color: #FFF6EE;
+            height: 30px;
+            color: #F18950;
+            line-height: 30px;
+            font-size: 12px;
+        }
+        
+        .scale_btn {
+            position: absolute;
+            margin: 65px 20px;
+            right: 0px;
+            z-index: 23;
+        }
+        
+        .right_filter_selection {
+            float: right;
+            margin-right: 20px;
+            margin-top: 25px;
+        }
+        
+        
+        .node {
+            cursor: pointer;
+        }
+        
+        .node text {
+            font: 14px PingFangSC-Regular;
+        }
+        
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+        
+        /* // 组织节点的样式 */
+        .node rect {
+            fill: #FFFFFF;
+            box-shadow: 0 0 4px 0 rgba(101, 113, 128, 0.12);
+            border-radius: 2px;
+        }
+        .node-rect{
+            fill:#fff;
+        }
+        
+        /* // 组织名称 */
+        .node .org-name {
+            font: 16px "PingFangSC-Regular";
+            fill: #657180;
+        }
+        
+        /* // 组织超编 */
+        .node .org-over-fill {
+            fill: #FF5557;
+        }
+        
+        /* // 超编文字提示 */
+        .node .org-over-fill-tip {
+            font: 12px "PingFangSC-Regular";
+        }
+        
+        /* // 分割线 */
+        .node .org-chart-line {
+            stroke: #E3E8EE;
+            stroke-width: 1;
+        }
+        
+        /* 信息项 */
+        .node .org-chart-info-item {
+            font: 14px "PingFangSC-Regular";
+        }
+        
+        .node .org-chart-info-item-tip {
+            fill: #939BA6;
+        }
+        
+        .collapse-icon:hover {
+            opacity: .7;
+        }
+        
+        .collapse-icon-rotate {
+            transform: rotate(180deg);
+            transform-origin: center;
+        }
+        
+        #orgdownloadchart {
+            display: none;
+        }
+        </style>
+
+
+    <script src="../../d3.js"></script>
+
+</head>
+<body>
+        
+        <div  id="Main" style="width:100%;height:800px;border:1px solid #E3E8EE;background-color:#F5F7F9;">
+    <script>
+        paintOrganazationChart();
+/*         d3.json("../json/org.json", function(error, json) {
+    //rendering logic here
+}) */
+    
+    function paintOrganazationChart() {
+            var _this = this;
+            
+            var margin = {
+                top: 20,
+                right: 120,
+                bottom: 20,
+                left: 120
+            }
+                // 画布的大小
+            d3Area = document.getElementById('Main'),
+            width = d3Area.offsetWidth - 20,
+                height = d3Area.offsetHeight
+
+            // var root = _this.orgChartTreeData;
+            var root = {
+                "id": "39",
+                "name": "顶级测试组织",
+                "tip": "2",
+                "parentId": "",
+                "chkDisabled": false,
+                "open": true,
+                "children": [{
+                    "id": "41",
+                    "name": "开发测试组织---ttt",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": "",
+                    "leaderName": "凤九1",
+                    "registerCount": 5,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "56",
+                    "name": "测试调整",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": [{
+                        "id": "40",
+                        "name": "开发测试组织1",
+                        "tip": "2",
+                        "parentId": "56",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": null,
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": 2,
+                        "staffCount": 0,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": null
+                    }, {
+                        "id": "64",
+                        "name": "测试调整组织1",
+                        "tip": "2",
+                        "parentId": "56",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": null,
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": 1,
+                        "staffCount": 0,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": null
+                    }, {
+                        "id": "112",
+                        "name": "测试同级1 ",
+                        "tip": "2",
+                        "parentId": "56",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": [{
+                            "id": "72",
+                            "name": "测试你好",
+                            "tip": "2",
+                            "parentId": "112",
+                            "chkDisabled": false,
+                            "open": false,
+                            "children": null,
+                            "condition": null,
+                            "isRefreshTableStyle": false,
+                            "orgId": null,
+                            "orgName": null,
+                            "leaderPosName": "",
+                            "leaderName": "测试员工636",
+                            "registerCount": 0,
+                            "staffCount": 0,
+                            "lackCount": null,
+                            "personId": null,
+                            "personName": null,
+                            "empCode": null,
+                            "reportPersonId": null,
+                            "reportIdQueue": null,
+                            "posName": null,
+                            "isHavChild": true,
+                            "noHavChildList": null,
+                            "headImg": null
+                        }],
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": null,
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": 0,
+                        "staffCount": 0,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": null
+                    }, {
+                        "id": "119",
+                        "name": "测试-你好",
+                        "tip": "2",
+                        "parentId": "56",
+                        "chkDisabled": false,
+                        "open": false,
+                        "children": null,
+                        "condition": null,
+                        "isRefreshTableStyle": false,
+                        "orgId": null,
+                        "orgName": null,
+                        "leaderPosName": null,
+                        "leaderName": null,
+                        "registerCount": 3,
+                        "staffCount": 0,
+                        "lackCount": null,
+                        "personId": null,
+                        "personName": null,
+                        "empCode": null,
+                        "reportPersonId": null,
+                        "reportIdQueue": null,
+                        "posName": null,
+                        "isHavChild": true,
+                        "noHavChildList": null,
+                        "headImg": null
+                    }],
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": "",
+                    "leaderName": "不知道你",
+                    "registerCount": 16,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "51",
+                    "name": "uiu",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": 7,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "58",
+                    "name": "测试工资条",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": "",
+                    "leaderName": "测试员工559",
+                    "registerCount": 5,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "66",
+                    "name": "123",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": 0,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "67",
+                    "name": "发生的",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": 0,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "68",
+                    "name": "iu9i",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": 1,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }, {
+                    "id": "74",
+                    "name": "地方的地方",
+                    "tip": "2",
+                    "parentId": "39",
+                    "chkDisabled": false,
+                    "open": false,
+                    "children": null,
+                    "condition": null,
+                    "isRefreshTableStyle": false,
+                    "orgId": null,
+                    "orgName": null,
+                    "leaderPosName": null,
+                    "leaderName": null,
+                    "registerCount": 2,
+                    "staffCount": 0,
+                    "lackCount": null,
+                    "personId": null,
+                    "personName": null,
+                    "empCode": null,
+                    "reportPersonId": null,
+                    "reportIdQueue": null,
+                    "posName": null,
+                    "isHavChild": true,
+                    "noHavChildList": null,
+                    "headImg": null
+                }],
+                "condition": null,
+                "isRefreshTableStyle": false,
+                "orgId": null,
+                "orgName": null,
+                "leaderPosName": "",
+                "leaderName": "测试员工985",
+                "registerCount": 1789,
+                "staffCount": 0,
+                "lackCount": null,
+                "personId": null,
+                "personName": null,
+                "empCode": null,
+                "reportPersonId": null,
+                "reportIdQueue": null,
+                "posName": null,
+                "isHavChild": true,
+                "noHavChildList": null,
+                "headImg": null
+            };
+            console.log(root);
+
+            var i = 0,
+                duration = 650,
+                rectW = 270,
+                rectH = 130;
+
+                
+            
+            var tree = d3.layout.tree().nodeSize([rectW + 20, rectH]);
+            // 连线
+            /* var diagonal = d3.svg.diagonal()
+            .projection(function(d) {
+                return [d.x + rectW / 2, d.y + rectH / 2];
+            }); */
+            
+                /* 
+                scale()  Specifies the current zoom scale. If not specified, returns the current zoom scale, which defaults to 1.
+                scaleExtent 用于设置最小和最大的缩放比例
+                .on("zoom", zoomed);  当 zoom 事件发生时，调用 zoomed 函数, zoomed 函数，用于更改需要缩放的元素的属性，d3.event.translate 是平移的坐标值，d3.event.scale 是缩放的值。
+                */
+            var zm = d3.behavior.zoom().scale([0.8]).scaleExtent([0.3, 3]).on("zoom", redraw);
+            _this.zoomListener = zm;
+            //+ " scale(" + 0.8 + ")"
+            var svg = d3.select("#Main").append("svg").attr("id", "mainOrgChart").attr("width", width).attr("height", height)
+                .call(zm).append("g")
+                .attr("transform", "translate(" + (width / 2 - rectW / 2) + "," + 20 + ")" + " scale(" + 0.8 + ")").attr("id", "chartOrgContainer");
+            //necessary so that zoom knows where to zoom and unzoom from
+            zm.translate([(width / 2 - rectW / 2), 20]);
+
+            root.x0 = 0;
+            root.y0 = height / 2;
+
+            function collapse(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    if (d._children) {
+                        d._children.forEach(collapse);
+
+                    }
+                    //默认全部展开
+                    // d.children = null;
+                }
+            }
+            if (root.children) {
+                root.children.forEach(collapse);
+            }
+            update(root);
+
+            //d3.select("#Main").style("height", "800px");
+
+            function update(source) {
+
+                tree.separation(function(a, b) {
+                    return 1;
+                })
+                // Compute the new tree layout.
+                var nodes = tree.nodes(root).reverse(),
+                    links = tree.links(nodes);
+
+
+                // Normalize for fixed-depth.
+                nodes.forEach(function(d) {
+                    d.y = d.depth * 200;
+                });
+
+                // Update the nodes…
+                var node = svg.selectAll("g.node")
+                    .data(nodes, function(d) {
+                        return d.id || (d.id = ++i);
+                    });
+
+                // Enter any new nodes at the parent's previous position.
+                var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .attr("transform", function(d) {
+                        return "translate(" + source.x0 + "," + source.y0 + ")";
+                    })
+                    .on("click", click);
+
+                /*创建阴影*/
+                var defs = nodeEnter.append("defs");
+                var filter = defs.append("filter").attr("id", 'rectDef').attr('height', '120%');
+                filter.append('feColorMatrix')
+                    .attr('result', 'matrixOut')
+                    .attr('in', 'offOut')
+                    .attr('type', 'matrix')
+                    .attr('values', '0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0 0 0 0.1 0.1 0')
+                filter.append('feGaussianBlur')
+                    .attr('result', 'blurOut')
+                    .attr('in', 'matrixOut')
+                    .attr('stdDeviation', 3)
+                filter.append('feBlend')
+                    .attr('in', 'SourceGraphic')
+                    .attr('in2', 'blurOut')
+                    .attr('mode', 'normal')
+                nodeEnter.append("rect")
+                    .attr('class', 'node-rect')
+                    .attr("width", rectW)
+                    .attr("height", rectH+10)
+                    .attr('rx', 5)
+                    .attr('ry', 5)
+                    .style("fill", '#fff')
+                    .attr('filter', 'url(#rectDef)');
+
+
+                // 组织基础框架
+                nodeEnter.append("rect")
+                    .attr("class", "orgNodeRect")
+                    .attr("rx", 6)
+                    .attr("ry", 6)
+                    .attr("width", rectW)
+                    .attr("height", rectH);
+
+                // 组织名称顶级，靠左 ,如果文字超过了隐藏 显示13字符
+                nodeEnter.append("text")
+                    .attr("class", "org-name")
+                    .attr("x", 16)
+                    .attr("y", 26)
+                    .attr("text-anchor", "left")
+                    .text(function(d) {
+                        var orgName = d.name;
+                        if (orgName.length > 12) {
+                            orgName = orgName.substring(0, 11) + "..."
+                        }
+                        return orgName;
+                    })
+                    .on("mouseover", function(d) {
+                        console.log(d);
+                    });
+                // title 分割线
+                nodeEnter.append("line")
+                    .attr("class", "org-chart-line")
+                    .attr("x1", 0)
+                    .attr("x2", rectW)
+                    .attr("y1", 40)
+                    .attr("y2", 40);
+                // 第一个信息项
+                nodeEnter.append('rect')
+                    .attr("class", "org-chart-info-item")
+                    .attr("width", rectW)
+                    .attr("y", 46)
+                    .attr("height", 18);
+
+                // 三行 三个y位置：62 ，88 112
+                var itemy1 = 62, itemy2 = 88, itemy3 = 112;
+                // var isShowOrgLeader = _this.orgFilters[1].value; //显示组织负责人
+                // var isShowStaff = _this.orgFilters[3].value; // 在职人员
+                // var isShowRegist = _this.orgFilters[2].value; //显示编制
+                var isShowOrgLeader = "true"; //显示组织负责人
+                var isShowStaff = "true" // 在职人员
+                var isShowRegist = "true" //显示编制
+                // 控制是否显示负责人
+                if (isShowOrgLeader == 'true') {
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 38)
+                        .attr("y", itemy1)
+                        .attr("text-anchor", "middle")
+                        .text("负责人");
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 76)
+                        .attr("y", itemy1)
+                        .attr("text-anchor", "right")
+                        .text(function(d) {
+                            var orgLeader = "未设置负责人";
+                            var leaderPosName = ""
+                            var verticalLine = " | "
+                            if (d.leaderName) {
+                                orgLeader = d.leaderName;
+                            }
+                            if (d.leaderPosName) {
+                                leaderPosName = d.leaderPosName;
+                            }
+                            if (leaderPosName == '') {
+                                verticalLine = "";
+                            }
+                            return orgLeader + verticalLine + leaderPosName;
+                        });
+                }
+                var realItemy2 = itemy2;
+                //如果没有负责人，则在第一个位置
+                if (isShowOrgLeader == 'false') {
+                    realItemy2 = itemy1;
+                }
+                //控制显示在职人数
+                if (isShowStaff == "true") {
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 30)
+                        .attr("y", realItemy2)
+                        .attr("text-anchor", "right")
+                        .text("在职");
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 76)
+                        .attr("y", realItemy2)
+                        .attr("text-anchor", "right")
+                        .text(function(d) {
+                            return d.registerCount + "人";
+                        });
+                }
+                var realItemy3 = itemy3;
+
+                if ((isShowOrgLeader == "true" && isShowStaff == 'false') || (isShowOrgLeader == "false" && isShowStaff == 'true')) {
+                    // 只有一项
+                    realItemy3 = itemy2;
+                } else if (isShowOrgLeader == 'false' && isShowStaff == 'false') {
+                    // 没有
+                    realItemy3 = itemy1;
+                }
+                if (isShowRegist == 'true') {
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 30)
+                        .attr("y", realItemy3)
+                        .attr("text-anchor", "right")
+                        .text("编制");
+
+                    nodeEnter.append("text")
+                        .attr("class", "org-chart-info-item-tip")
+                        .attr("x", 76)
+                        .attr("y", realItemy3)
+                        .attr("text-anchor", "right")
+                        .text(function(d) {
+                            if (d.tip && d.tip == '2') {
+                                return "未设置编制"
+                            } else {
+                                return d.staffCount + "人";
+                            }
+                        });
+                }
+
+                // 超编 ，禁用的显示
+
+                nodeEnter.append("rect")
+                    .attr("class", "org-over-fill")
+                    .attr("x", rectW - 44)
+                    .attr("y", 10)
+                    .attr("width", 36)
+                    .attr("height", 20)
+                    .style("fill", function(d) {
+                        if (d.tip && d.tip == '2') {
+                            //未设置编制不现实超编
+                            return "transparent"
+                        } else {
+                            // 在职-编制>0
+                            if (d.registerCount - d.staffCount > 0) {
+                                return "#FF5557"
+                            } else {
+                                return "transparent";
+                            }
+                        }
+
+                    });
+                nodeEnter.append("text")
+                    .attr("class", 'org-over-fill-tip')
+                    .attr("x", rectW - 26)
+                    .attr("y", 23)
+                    .style('text-anchor', "middle")
+                    .style({ 'font': '12px PingFangSC-Regular', "fill": "#fff" })
+                    .text(function(d) {
+                        if (d.tip && d.tip == '2') {
+                            //未设置编制不显示超编
+                            return ""
+                        } else {
+                            // 在职-编制>0
+                            if (d.registerCount - d.staffCount > 0) {
+                                return "超编"
+                            } else {
+                                return "";
+                            }
+                        }
+                    });
+                nodeEnter.append("rect")
+                    .attr("class", "org-over-fill")
+                    .attr("x", rectW - 44)
+                    .attr("y", 10)
+                    .attr("width", 36)
+                    .attr("height", 20)
+                    .style("fill", function(d) {
+                        if (d.chkDisabled) {
+                            return "#657180"
+                        } else {
+                            return "transparent";
+                        }
+                    });
+                nodeEnter.append("text")
+                    .attr("class", 'org-over-fill-tip')
+                    .attr("x", rectW - 26)
+                    .attr("y", 23)
+                    .style('text-anchor', "middle")
+                    .style("fill", "#fff")
+                    .text(function(d) {
+                        if (d.chkDisabled) {
+                            return "禁用"
+                        } else {
+                            return "";
+                        }
+
+                    });
+
+                // Transition nodes to their new position.
+                var nodeUpdate = node.transition()
+                    .duration(duration)
+                    .attr("transform", function(d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                    });
+
+                nodeUpdate.select("rect")
+                    .attr("font-size", 24)
+                    .attr("width", rectW)
+                    .attr("height", rectH);
+
+                nodeUpdate.select("text")
+                    .style("fill-opacity", 1)
+
+                // Transition exiting nodes to the parent's new position.
+                var nodeExit = node.exit().transition()
+                    .duration(duration)
+                    .attr("transform", function(d) {
+                        return "translate(" + source.x + "," + source.y + ")";
+                    })
+                    .remove();
+
+                nodeExit.select("rect")
+                    .attr("width", rectW)
+                    .attr("height", rectH)
+                    .style("fill", "#fff");
+
+                nodeExit.select("text");
+
+                // 连线
+                var link = svg.selectAll("path.link")
+                    .data(links, function(d) {
+                        return d.target.id;
+                    });
+
+                link.enter().insert("path", "g")
+                    .data(links)
+                    .attr("class", "link")
+                    .attr("x", rectW)
+                    .attr("y", rectH / 2)
+                    .attr("d", connect)
+                    .style('opacity', 0)
+                    .style('stroke', function(d, i) {
+                        return '#D1D8E0'
+                    })
+                    .style('stroke-width', 1.2)
+                    .style('fill', 'none')
+
+                link.transition()
+                    .duration(duration)
+                    .attr("d", connect)
+                    .style('opacity', 1)
+
+                link.exit().transition()
+                    .duration(duration)
+                    .style('opacity', 0)
+                    .remove();
+
+                function connect(d, i) {
+                    return "M" + (d.source.x + rectW / 2) + "," + (d.source.y + rectH)
+                        + "V" + (d.source.y + 160)
+                        + "H" + (d.target.x + rectW / 2)
+                        + "V" + (d.target.y);
+                };
+
+                // 上下图标
+                d3.selectAll('.collapse-icon').remove();
+                node.append('image').attr('x', rectW / 2 - 18).attr('y', 126).attr("width", 36).attr("height", 24)
+                    .filter((d) => {
+                        return (d.children && d.children.length) || (d._children && d._children.length)
+                    })
+                    .attr("xlink:href", '../../images/down.png')
+                    .attr('class', function(d) {
+                        return d.children ? 'collapse-icon' : 'collapse-icon collapse-icon-rotate'
+                    })
+                    .on("click", _this.handleCollapseClick)
+
+                // Stash the old positions for transition.
+                nodes.forEach(function(d) {
+                    d.x0 = d.x;
+                    d.y0 = d.y;
+                });
+            }
+
+            function handleCollapseClick(d) {
+                debugger
+                event.stopPropagation();
+                // var index = _this.openIds.indexOf(d.id);
+                // if (index > -1) {
+                //     _this.openIds.splice(index, 1);
+                // }
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                    d3.select(d3.event.target).attr('class', 'collapse-icon collapse-icon-rotate');
+                    _this.updateTree(d);
+                    //this.centerNode(d.parent || d);
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                    d3.select(d3.event.target).attr('class', 'collapse-icon');
+                    // _this.openIds.push(d.id);
+                    _this.updateTree(d);
+
+                    //this.centerNode(d);
+                }
+            }
+
+            // Toggle children on click.
+            function click(d) {
+                debugger
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update(d);
+            }
+
+            //Redraw for zoom
+            function redraw() {
+                //console.log("here", d3.event.translate, d3.event.scale);
+                svg.attr("transform",
+                    "translate(" + d3.event.translate + ")"
+                    + " scale(" + d3.event.scale + ")");
+            }
+
+        }
+
+
+        // 页面上自定义放大缩小的按钮的对应相响应
+        function handleZoom (type) {
+            console.log("---------------");
+            var num = type == '+' ? 0.2 : -0.2;
+            var scale = this.zoomListener.scale();
+            var translate = this.zoomListener.translate();
+            scale = scale + num;
+            this.zoomListener.scale(scale);
+            d3.select('#chartOrgContainer')
+                .transition()
+                .duration(300)
+                .attr("transform",
+                "translate(" + translate + ")" +
+                " scale(" + scale + ")");
+        }
+    </script>
+</body>
+</html>

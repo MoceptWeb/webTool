@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type="text/css">
+  </style>
+  <!-- <script src="../../d3.js"></script> -->
+  <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+  <script src="../../d3.js"></script>
+</head>
+
+<body>
+
+</body>
+    <script type="text/javascript">
+d3.select("body").selectAll("div")
+.data([4, 8, 15, 16, 23, 42])
+.enter().append("div")
+.text(function(d) { return d; });
+			
+		</script>
+
+</html>

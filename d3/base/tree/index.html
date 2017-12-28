@@ -42,14 +42,20 @@
       //定义布局范围  
       var treeWidth = d3Area.offsetWidth - 50;
       var treeHeight = d3Area.offsetHeight - 80;
+      var i = 0,
+                duration = 650,
+                rectW = 270,
+                rectH = 130;
       //定义D3树布局范围  
       var tree = d3.layout.tree()
         .size([treeHeight, treeWidth - 100])//注意D3布局跟svg坐标系无关,size(高，宽)  
         .separation(function (a, b) { return (a.parent == b.parent ? 2 : 2); });//设置相隔节点的间距，a、b节点相隔  
+        // var tree = d3.layout.tree().nodeSize([rectW + 20, rectH]);
 
       //定义连线生成器  
       var diagonal = d3.svg.diagonal()
-        .projection(function (d) { return [d.y, d.x]; });//设置连线点的变换器  
+        .projection(function (d) { 
+          return [d.y, d.x]; });//设置连线点的变换器  
 
 
       //绘制svg图形  
@@ -131,7 +137,13 @@
       // d3.json("./data.json", function (error, root) {
         var nodes = tree.nodes(root);   //获取所有节点信息  
         var links = tree.links(nodes);  //获取节点的连线信息集合  
-
+ 
+        function connect(d, i) {
+                    return "M" + (d.source.x + rectW / 2) + "," + (d.source.y + rectH)
+                        + "V" + (d.source.y + 160)
+                        + "H" + (d.target.x + rectW / 2)
+                        + "V" + (d.target.y);
+                };
         //绘制连线  
         var link = svg.selectAll(".link")
           .data(links)
@@ -146,7 +158,8 @@
           .enter()
           .append("g")
           .attr("class", "node")
-          .attr("transform", function (d) { return "translate(" + d.y + "," + d.x + ")"; })
+          .attr("transform", function (d) {
+             return "translate(" + d.y + "," + d.x + ")"; })
 
         //添加节点图标  
         node.append("circle")

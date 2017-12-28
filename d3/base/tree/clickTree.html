@@ -896,12 +896,18 @@
                         return d.target.id;
                     });
 
+                // 这是一个对角线生成器
+                var diagonal = d3.svg.diagonal()
+                .projection(function(d) {
+                    return [d.x + rectW / 2, d.y + rectH / 2];
+                }); 
+
                 link.enter().insert("path", "g")
                     .data(links)
                     .attr("class", "link")
                     .attr("x", rectW)
                     .attr("y", rectH / 2)
-                    .attr("d", connect)
+                    .attr("d", diagonal)
                     .style('opacity', 0)
                     .style('stroke', function(d, i) {
                         return '#D1D8E0'
@@ -911,13 +917,14 @@
 
                 link.transition()
                     .duration(duration)
-                    .attr("d", connect)
+                    .attr("d", diagonal)
                     .style('opacity', 1)
 
                 link.exit().transition()
                     .duration(duration)
                     .style('opacity', 0)
                     .remove();
+
 
                 function connect(d, i) {
                     return "M" + (d.source.x + rectW / 2) + "," + (d.source.y + rectH)

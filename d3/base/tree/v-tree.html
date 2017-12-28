@@ -8,8 +8,8 @@
   <title>Document</title>
   <style type="text/css">
     #relevanceRuleConfig {
-      width: 800px;
-      height: 800px;
+      width: 100%;
+      height: 1000px;
     }
 
     .node circle {
@@ -44,14 +44,14 @@
       var treeHeight = d3Area.offsetHeight - 80;
       var i = 0,
                 duration = 650,
-                rectW = 270,
-                rectH = 130;
+                rectW = 30,
+                rectH = 15;
       //定义D3树布局范围  
       // var tree = d3.layout.tree()
       //   .size([treeHeight, treeWidth - 100])//注意D3布局跟svg坐标系无关,size(高，宽)  
       //   .separation(function (a, b) { return (a.parent == b.parent ? 1 : 2); });//设置相隔节点的间距，a、b节点相隔  
         // var tree = d3.layout.tree().nodeSize([rectW + 20, rectH]);
-        var tree = d3.layout.tree().nodeSize([rectW + 20, rectH]);
+        var tree = d3.layout.tree().nodeSize([rectW + 20, rectH + 30]);
 
       //定义连线生成器  
       var diagonal = d3.svg.diagonal()
@@ -167,8 +167,8 @@
           //    return "translate(" + d.y + "," + d.x + ")"; })
           .attr("transform", function (d) {
             //  return "translate(0," + treeHeight / 2 + ")"; 
-            return "translate(" + d.x + "," + d.y + ")";
-
+            // return "translate(" + d.x + "," + (d.y + 30) + ")";
+             return "translate(" + d.x + "," + d.y  + ")";
           })
 
        /*  //添加节点图标  

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+        <style>
+            body{
+                position: relative;
+            }
+            .show_text{
+                width: 100%;
+                margin:0 auto;
+            }
+            .mask{
+                width:100%;
+                position: absolute;
+                top:0;
+                height: 100%;
+                background-image: -webkit-linear-gradient(top, hsla(0,0%,100%,0), #fff);
+                background-image: -moz-linear-gradient(top, hsla(0,0%,100%,0), #fff);
+                background-image: -o-linear-gradient(top, hsla(0,0%,100%,0), #fff);
+                background-image: linear-gradient(top, hsla(0,0%,100%,0), #fff);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="show_text">
+            <p>渐变这种效果其实是一个图片的样子，我们可以设置一张上下透明的背景图，定位在文字上，没有渐变之前可以用这种方法。css3有了渐变，我们可以直接使用，渐变可以应用于任何使用背景图片的地方。这意味着在CSS样式中，渐变相当于背景图片...</p>
+            <p>渐变这种效果其实是一个图片的样子，我们可以设置一张上下透明的背景图，定位在文字上，没有渐变之前可以用这种方法。css3有了渐变，我们可以直接使用，渐变可以应用于任何使用背景图片的地方。这意味着在CSS样式中，渐变相当于背景图片...</p>
+            <p>渐变这种效果其实是一个图片的样子，我们可以设置一张上下透明的背景图，定位在文字上，没有渐变之前可以用这种方法。css3有了渐变，我们可以直接使用，渐变可以应用于任何使用背景图片的地方。这意味着在CSS样式中，渐变相当于背景图片...</p>
+            <p>渐变这种效果其实是一个图片的样子，我们可以设置一张上下透明的背景图，定位在文字上，没有渐变之前可以用这种方法。css3有了渐变，我们可以直接使用，渐变可以应用于任何使用背景图片的地方。这意味着在CSS样式中，渐变相当于背景图片...</p>
+        </div>
+        <div class="mask"></div>
+    </body>
+
+
+    <script>
+
+function hex2RGB(color){
+    if(color.substr(0,1)=="#")color=color.substring(1);
+    if(color.length!=6)return alert("请输入正确的十六进制颜色码！");
+    color=color.toLowerCase()
+    var b=new Array();
+    for(x=0;x<3;x++){
+        b[0] = color.substr(x*2, 2);
+        b[1] = b[0].substr(0, 1);
+        b[2] = b[0].substr(1, 1);
+        b[3] = "0123456789abcdef";
+        b[20+x] = b[3].indexOf(b[1])*16+b[3].indexOf(b[2])
+    }
+    return b[20]+","+b[21]+","+b[22];
+}
+
+</script>
+</html>

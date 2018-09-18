@@ -16,8 +16,8 @@ ev.preventDefault();
 
 function drag(ev)
 {
+    ev.stopPropagation();
     console.log('start drag')
-console.log('twice drag', ev.dataTransfer.getData("Text"));
 var data = ev.dataTransfer.getData("Text")
 if(data) {
     debugger
@@ -34,10 +34,10 @@ var data=ev.dataTransfer.getData("Text");
 console.log(data)
 }
 
-function drop1(ev)
+function dragend(ev)
 {
-console.log('drop1')
-console.log(ev.dataTransfer.getData("Text"))
+    ev.stopPropagation();
+console.log('ondragend')
 ev.preventDefault();
 
 }
@@ -47,9 +47,9 @@ ev.preventDefault();
 
 <div>
 
-<div class="test" draggable="true" ondragstart="drag(event)" ondragend="drop1(event)" id="11111" ondrop="drop(event)" ondragover="allowDrop(event)">21111111111：
+<div class="test" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)"  ondrop="drop(event)"  id="11111">2331111111111：
 
-<div draggable="true" ondragstart="drag(event)" ondrop="drop1(event)" id="22222">请22222把 W3School 的图片拖放到矩形中：</div>
+<div draggable="true" ondragstart="drag(event)" ondragend="dragend(event)" id="22222">请22把 W3School 的图片拖放到矩形中：</div>
 </div>
 </div>
 

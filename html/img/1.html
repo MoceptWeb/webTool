@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+    <script type="text/javascript">
+
+    function load() {
+        init();
+    }
+
+        // 缩放图片
+        function imgToSize(oBool) {
+            var pic = document.getElementById("pic");
+            var text=document.getElementById("smw");
+            pic.style.zoom = parseInt(pic.style.zoom) + (oBool ? 2 : -2) + '%';
+            text.defaultValue=pic.style.zoom;
+        }
+        //还原尺寸
+        function restore() {
+            var pic = document.getElementById("pic");
+            var text=document.getElementById("smw");
+            pic.style.zoom = '100%';
+            pic.style.left = "0px";
+            pic.style.top = "0px";
+            text.defaultValue=pic.style.zoom;
+        }
+        // 旋转图片
+        var current = 0;
+        function imgRoll(direction) {
+            var pic = document.getElementById("pic");
+            if (direction == "left") {
+                current = (current - 90) % 360;
+            }
+            else if (direction == "right") {
+                current = (current + 90) % 360;
+            }
+            pic.style.transform = 'rotate(' + current + 'deg)';
+        }
+        //图片拖拽
+        drag = 0;
+        move = 0;
+        function mousedown() {
+            if (drag) {
+                X1 = window.event.x - parseInt(pic.style.left);
+                Y1 = window.event.y - parseInt(pic.style.top);
+                move = 1;
+            }
+        }
+        function onmouseover() {
+            drag = 1;
+        }
+        function mouseStop() {
+            window.event.returnValue = false;
+        }
+        function mousemove() {
+            if (move) {
+                pic.style.left = (window.event.x - X1) + "px";
+                pic.style.top = (window.event.y - Y1) + "px";
+            }
+        }
+        function mouseup() {
+            move = 0;
+        }
+        function init() {
+            var pic = document.getElementById("pic");
+            pic.style.zoom="100%";
+            pic.style.left="0px";
+            pic.style.top="0px";
+            pic.style.position="relative";
+            pic.style.cursor="move";
+            document.all.pic.onmouseover = onmouseover;
+            document.all.pic.onmousemove = mousemove;
+            document.all.pic.onmousedown = mousedown;
+            document.all.pic.onmouseup = mouseup;
+            document.all.pic.ondragstart = mouseStop;
+        }
+    </script>
+</head>
+<body onload="load()">
+    <div>
+        <img id="pic" src="https://sponsor-static.segmentfault.com/49c6dc14566d21018ab35fe2128eb513.jpeg" />
+    </div>
+
+<br/>
+<div class="btn">
+    <button class="btnleft" onclick="imgRoll('left');">左旋转90度</button>
+    <button class="btnright" onclick="imgRoll('right');">右旋转90度</button>
+    <button class="btnup" onclick="imgToSize(1);">放大</button>
+    <button class="btndown" onclick="imgToSize(0);">缩小</button>
+    <button class="btnreturn" onclick="restore();">还原</button>
+    <input type="text" value="100%" id="smw"/>
+</div>
+<!-- https://github.com/nzbin/magnify -->
+</body></html>
